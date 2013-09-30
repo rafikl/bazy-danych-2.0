@@ -377,7 +377,7 @@ dodać klauzulę `where`
 
 .. code-block:: sql
 
-    SELECT AVG(pm_10) FROM zaj1 WHERE date BETWEEN date '2012-01-01' AND '2012-01-31';
+    SELECT AVG(pm_10) FROM zaj1 WHERE date BETWEEN '2012-01-01' AND '2012-01-31';
 
 :download:`Wynik zapytania </wyklad1/data/selectavg-where.html>`
 
