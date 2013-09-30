@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.5.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.custom.Systemborder</type>
+    <coordinates>
+      <x>190</x>
+      <y>220</y>
+      <w>240</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>DBMS</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Database</type>
+    <coordinates>
+      <x>240</x>
+      <y>290</y>
+      <w>110</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Baza danych</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Actor</type>
+    <coordinates>
+      <x>660</x>
+      <y>270</y>
+      <w>80</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Klient</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>350</x>
+      <y>260</y>
+      <w>340</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+TCP-IP</panel_attributes>
+    <additional_attributes>30;50;320;50</additional_attributes>
+  </element>
+</diagram>
