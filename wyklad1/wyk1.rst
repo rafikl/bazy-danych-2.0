@@ -56,12 +56,12 @@ Gwarantują zachowanie tranzakcji w systemie.
 Wady systemów relacyjnych
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Systemy `NoSQL` zasadniczo lepiej się skalują, tj. łatwiej jest wykonać
-system składający się z kilkuset fizycznych serwerów `NoSQL` działających raze,
+Systemy ``NoSQL`` zasadniczo lepiej się skalują, tj. łatwiej jest wykonać
+system składający się z kilkuset fizycznych serwerów ``NoSQL`` działających raze,
 niż system kilkudziesięciu serwerów relacyjnych działających razem.
 
 Specjalistyczne (czyli takie które są w stanie przechowywać tylko pewien
-rodzaj danych: na przykład grafowe, dokumentowe, klucz-wartość) systemy `NoSQL`,
+rodzaj danych: na przykład grafowe, dokumentowe, klucz-wartość) systemy ``NoSQL``,
 są w stanie wydajniej i wygodniej przechowywać ten rodzaj danych niż systemy
 relacyjne.
 
@@ -87,14 +87,14 @@ schematem (z ang. database schema).
 Wartość NULL
 ^^^^^^^^^^^^
 
-Wartość `NULL` reprezentuje informację o tym że dana wartość jest niedostępna.
-Jeśli w kolumnie 'ocena' zawarta jest wartość `NULL` oznacza to że system nie posiada
+Wartość ``NULL`` reprezentuje informację o tym że dana wartość jest niedostępna.
+Jeśli w kolumnie 'ocena' zawarta jest wartość ``NULL`` oznacza to że system nie posiada
 informacji o danej ocenie.
 
-Wprowadzenie wartości `NULL` jest ważne ponieważ pozwala ona jasno i jednoznacznie
+Wprowadzenie wartości ``NULL`` jest ważne ponieważ pozwala ona jasno i jednoznacznie
 powiedzieć: tej informacji nie mamy oraz żadna poprawna wartość w żadnej kolumnie
-nigdy nie będzie równa NULL. Bez wartości `NULL` musielibyśmy uznać że np. ocena
-`-1` oznacza że dany ocena nie jest dostępna, co jest mniej oczywiste.
+nigdy nie będzie równa NULL. Bez wartości ``NULL`` musielibyśmy uznać że np. ocena
+``-1`` oznacza że dany ocena nie jest dostępna, co jest mniej oczywiste.
 
 
 .. index:: NULL, NON NULL, primary key, foreign key, constraint, CHECK
@@ -108,20 +108,20 @@ Systemy relacyjne pozwalają nakładać na schemat pewne ograniczenia albo inacz
 więzy (*z ang.* constraints) przykłady klasy ograniczeń zawartych w przykładzie:
 
 klucz główny *z ang.* primary key
-    Kolumna `id` tabeli student jest unikalne (dwóm wierszom nie może być
+    Kolumna ``id`` tabeli student jest unikalne (dwóm wierszom nie może być
     przypisana taka sama wartość w tej kolumnie), oraz nie może przyjmować
     wartości pustej. Klucz główny jednoznacznie definiuje dany wiersz w tabeli.
 
 nie pustość *z ang.* non null
-    Kolumny `imie` oraz `nazwisko` nie mogą zawierać wartości pustej `NULL`
+    Kolumny ``imie`` oraz ``nazwisko`` nie mogą zawierać wartości pustej ``NULL``
 
 sprawdzenie *z ang.* check constraint
     Check constraint pozwala wymusić by dany wiersz spełniał zadane wyrażenie
     logiczne. W kolumnie ocena są wartości od 2 do 5.
 
 klucz obcy *z ang.* foreign key
-    Jeśli w tabeli `ocena` w kolumnie `pk_studenta` będzie
-    wartość X, to istnieje student o `id` równym X.
+    Jeśli w tabeli ``ocena`` w kolumnie ``pk_studenta`` będzie
+    wartość X, to istnieje student o ``id`` równym X.
 
     To ograniczenie pozwala definiować zależności między tabelami, mówimy że
     ocena A jest oceną studenta B jeśli w kolumnie 'pk_studenta' jest
@@ -145,8 +145,9 @@ ze standardem SQL.
 Narzędzia administracyjne bazy danych
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Polecenie konsolowe `psql`
-**************************
+Polecenie konsolowe ``psql``
+****************************
+
 Polecenie to pozwala na interakcje z bazą danych za pomocą
 konsoli. Zasadniczo ma ono wszystkie możliwości klientów
 graficznych.
@@ -183,10 +184,10 @@ Słowem  konfiguracja serwera powinna być taka:
 Wybieranie danych
 -------------------
 
-Do pobierania danych z bazy dancyh służy polecenie `SELECT`
+Do pobierania danych z bazy dancyh służy polecenie ``SELECT``
 
 .. note::
-    Proszę nie myśleć o poleceniu `SELECT`
+    Proszę nie myśleć o poleceniu ``SELECT``
     jako o metodzie na wybieranie danych, ale raczej jako o metodzie
     opisywania danych które chcemy pobrać.
 
@@ -220,15 +221,15 @@ stacji Warszawa Ursynów.
 
 Ważne informacje o schemacie:
 
-* Kolumna `date` zawiera chwilę zebrania pomiaru
-* Kolumna `pm_10` zawiera poziom pyłu zawieszonego :math:`PM_{10}`.
-* kolumna `wind_speed` zawiera kierunek wiatru (w stopniach!)
+* Kolumna ``date`` zawiera chwilę zebrania pomiaru
+* Kolumna ``pm_10`` zawiera poziom pyłu zawieszonego :math:`PM_{10}`.
+* kolumna ``wind_speed`` zawiera kierunek wiatru (w stopniach!)
 
 
 Klauzula WHERE
 ^^^^^^^^^^^^^^
 
-Do ograniczania zakresu wybieranych rzędów danych służy klauzula `WHERE`,
+Do ograniczania zakresu wybieranych rzędów danych służy klauzula ``WHERE``,
 Powiedzmy że chcemy wybrać dane ze stycznia 2012 roku.
 
 .. code-block:: sql
@@ -240,7 +241,7 @@ Powiedzmy że chcemy wybrać dane ze stycznia 2012 roku.
 .. note::
 
       Poza klauzulą where mamy tutaj kilka cech języka postgresql. Za pomocą
-      znaków `'` oznaczamy stałe określające ciągi znaków.
+      znaków ``'`` oznaczamy stałe określające ciągi znaków.
 
       *Poboczna uwaga*: to że
       podałem datę jako ciąg znaków, nie oznacza że w ten sposób daty są
@@ -248,7 +249,7 @@ Powiedzmy że chcemy wybrać dane ze stycznia 2012 roku.
       postgres umie rzutować ciągi znaków w dobrym formacie na datę.
 
 
-Klauzula `WHERE` przyjmuje dowolne wyrażenie logiczne, w tym zapytaniu wybieramy
+Klauzula ``WHERE`` przyjmuje dowolne wyrażenie logiczne, w tym zapytaniu wybieramy
 dane ze stycznia w dniach w których jednocześnie przekroczono poziomy
 :math:`PM_{10}` oraz :math:`NO_2`:
 
@@ -270,7 +271,7 @@ Wybieranie kolumn
 
 Możemy określać jakie kolumny zbioru wynikowego nas interesują,
 na przykłąd żeby wybrać datę i kierunek wiatru możemy napisać,
-w takim wypadku po słowie `SELECT` pojawia się lista wyrażeń, które
+w takim wypadku po słowie ``SELECT`` pojawia się lista wyrażeń, które
 określają poszczególne kolumny wybranego zbioru danych:
 
 .. code-block:: sql
@@ -304,7 +305,7 @@ Możemy też wykonywać zapytania wybierające dane z wielu kolumn:
 
 :download:`Wynik zapytania </wyklad1/data/select-nonsense.html>`
 
-W tym zapytaniu użyto również klauzuli `AS` która pozwala
+W tym zapytaniu użyto również klauzuli ``AS`` która pozwala
 wyrażeniu (lub kolumnie) nadać określoną nazwę w zbiorze wynikowym.
 
 Dodatkowe informacje:
@@ -329,12 +330,12 @@ order by:
 :download:`Wyniki zapytania </wyklad1/data/selectorder.html>`, proszę porównać z
 :download:`tym samym zapytaniem bez klauzuli order by </wyklad1/data/selectstar.html>`
 
-Słowo `desc` (skrót ot *descending*) oznacza kierunek sortowania od wartości największej do najmniejszej.
+Słowo ``desc`` (skrót ot *descending*) oznacza kierunek sortowania od wartości największej do najmniejszej.
 Przy uznaniu co oznacza wartość *największa* i *najmniejsza* można kierować
 się intuicją, jedyny problem jest z `sortowaniem i porównywaniem ciągów znaków
 <https://www.google.com/search?q=postgresql+string+collation>`_.  By posortować
-dane od wartości najmniejszej do największej należałoby użyć `asc` (*ascending*).
-Domyślnie (bez podania `desc` i `asc`) dane są sortowane od najmniejszej do
+dane od wartości najmniejszej do największej należałoby użyć ``asc`` (*ascending*).
+Domyślnie (bez podania ``desc`` i ``asc``) dane są sortowane od najmniejszej do
 największej.
 
 Proszę poprzednie zapytanie z:
@@ -368,12 +369,12 @@ danych:
 
 :download:`Wynik zapytania </wyklad1/data/selectavg.html>`.
 
-Proszę zauważyć że klauzula `AVG`, oraz inne funkcje agregujące
+Proszę zauważyć że klauzula ``AVG``, oraz inne funkcje agregujące
 (*z. ang* aggregate functions) całkiem zmienia nam wybrany zestaw danych!
 W tym wypadku powoduje że w zestawie wyikowym mamy jeden wiersz.
 
 By wybrać średni poziom z jakiegoś okresu czasu należałoby
-dodać klauzulę `where`
+dodać klauzulę ``where``
 
 .. code-block:: sql
 
@@ -383,24 +384,24 @@ dodać klauzulę `where`
 
 Przykłady funkcji agregujących:
 
-`COUNT`
+``COUNT``
     Zwraca ilość wierszy w zestawie danych
-`STDDEV`
+``STDDEV``
     Zwraca odchylenie standardowe
-`AVG`
+``AVG``
     Zwraca średnią
-`MAX`
+``MAX``
     Zwraca największą wartość z zestawu danych
 
 `Więcej funkcji agregujących
 <https://www.google.pl/?q=postgresql%209.2%20aggregate%20functions>`_
 
-Klauzula `GROUP BY`
-^^^^^^^^^^^^^^^^^^^
+Klauzula ``GROUP BY``
+^^^^^^^^^^^^^^^^^^^^^
 
 Wybranie średniej całego zestawu danych też ma ograniczoną
 przydatność, by wykonać funkcje agregujące na pewnych podzbiorach
-danych należy użyć klauzuli `GROUP BY`.
+danych należy użyć klauzuli ``GROUP BY``.
 
 Klauzula ta przyjmuje kolumnę bądź wyrażenie, oraz powoduje podział
 zbioru danych na podgrupy dla których wyrażenie w group by przyjmuje
@@ -426,32 +427,32 @@ nastąpiło przekroczenie dopuszczalnego dziennego poziomu pyłu zawieszonego
 
 Teraz grup mamy 360 (tyle ile jest różnych wartości kierunku wiatru).
 
-Gdy w wyrażeniu pojawia się klauzula `GROUP BY` znacznie ogranicza
-się to co możemy podać po klauzuli `SELECT`, mianowicie możemy podać:
+Gdy w wyrażeniu pojawia się klauzula ``GROUP BY`` znacznie ogranicza
+się to co możemy podać po klauzuli ``SELECT``, mianowicie możemy podać:
 
 1. Wyrażenie zawierające wynik działania funkcji agregujących na
    *dowolnych* kolumnach
-2. Wyrażenie zawierające wyrażenie przekopiowane z klauli `GROUP BY`
+2. Wyrażenie zawierające wyrażenie przekopiowane z klauli ``GROUP BY``
 
-Przykładowo w zapytaniu z klauzulą `GROUP BY sin(radians(wind_speed))`
+Przykładowo w zapytaniu z klauzulą ``GROUP BY sin(radians(wind_speed))``
 może pojawić się:
 
-* Wyrażenie `AVG(pm_10)` (zasada 1)
-* Wyrażenie `sin(radians(wind_speed))` (zasada 2)
+* Wyrażenie ``AVG(pm_10)`` (zasada 1)
+* Wyrażenie ``sin(radians(wind_speed))`` (zasada 2)
 
 Nie może natomiast pojawić się:
 
-* Wyrażenie `pm_10`
-* Wyrażenie `wind_speed` (mimo że kolumna `wind_speed` była użyta w
+* Wyrażenie ``pm_10``
+* Wyrażenie ``wind_speed`` (mimo że kolumna ``wind_speed`` była użyta w
   grupowaniu)
 
 Takie ograniczenie ma bardzo proste uzasadnienie: po zgrupowaniu względem
 jakiegoś wyrażenia każdemu wierszowi tworzonego zbioru wynikowego
-przypisane jest wiele wierszy z tabeli (wszystkie dla których wyrażenie `GROUP BY`
+przypisane jest wiele wierszy z tabeli (wszystkie dla których wyrażenie ``GROUP BY``
 przyjmuje jedną wartość), a baza danych 'nie bardzo wie' którą z tych wartości
 wybrać. My możemy albo dać bazie danych przepis o tym jak z tego zbioru danych
 stworzyć jedną wartość do wyświetlenia (przepisem tym jest funkcja agregująca),
-albo musimy wybrać wyrażenie z klauzuli `GROUP BY`, ponieważ dla każdego
+albo musimy wybrać wyrażenie z klauzuli ``GROUP BY``, ponieważ dla każdego
 wiersza w zbiorze danych z definicji wyrażenie to musi dać tą samą wartość.
 
 Proszę zastanowić się dlaczego takie zapytanie jest poprawne:
@@ -474,22 +475,22 @@ Dodatnowe przykłady:
 ^^^^^^^^^^^^^^^^^^^^
 
 Powiedzmy że chcemy wyznaczyć dzienne średnie poziomy pyłu zawieszonego
-:math:`PM_{10}`, by tego użyć musimy użyć funkcji `date_trunc`, powoduje ona
+:math:`PM_{10}`, by tego użyć musimy użyć funkcji ``date_trunc``, powoduje ona
 obcięcie wartości przechowującej czas do wyznaczonej dokładności.
 
-Przykładowo nastpujące dwa zapytania zwracają `true`:
+Przykładowo nastpujące dwa zapytania zwracają ``true``:
 
 .. code-block:: sql
 
     SELECT date_trunc('day', '2012-01-07 11:11'::date) = '2012-01-07';
     SELECT date_trunc('month', '2012-01-07 11:11'::date) = '2012-01-01';
 
-Klauzula `HAVING`
-^^^^^^^^^^^^^^^^^
+Klauzula ``HAVING``
+^^^^^^^^^^^^^^^^^^^
 
 Klauzula ta działa jak klauzula where, ale pozwala filtrować
 względem agregowanych wartości, na przykład by wybrać dni
-dla których poziom `PM_10` jest większy niż norma
+dla których poziom ``PM_10`` jest większy niż norma
 należy wykonać zapytanie:
 
 .. code-block:: sql
@@ -501,7 +502,7 @@ należy wykonać zapytanie:
 Wyrażenie having pozwala filtrować zbiór danych pod względem wyrażeń
 zawierających funkcje agregujące.
 
-Proszę zastanowić się czym różni się klauzula `WHERE` od klauzuli `HAVING`.
+Proszę zastanowić się czym różni się klauzula ``WHERE`` od klauzuli ``HAVING``.
 
 
 

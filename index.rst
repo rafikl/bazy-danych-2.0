@@ -22,6 +22,16 @@ Zajęcia
 
    wyklad1/zaj1.rst
 
+Pozostałe
+---------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   plan.rst
+   regulamin.rst
+
 
 
 
