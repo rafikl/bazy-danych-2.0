@@ -13,6 +13,7 @@ Wykłady
    :maxdepth: 1
 
    wyklad1/wyk1.rst
+   wyklad2/wyk2.rst
 
 Zajęcia
 -------
@@ -31,6 +32,8 @@ Pozostałe
 
    plan.rst
    regulamin.rst
+
+* `Prezentacja z zajęć 0 <http://slid.es/jbzdak/bd2>`_
 
 
 
