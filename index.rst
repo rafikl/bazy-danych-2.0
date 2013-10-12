@@ -32,6 +32,7 @@ Pozostałe
 
    plan.rst
    regulamin.rst
+   system-zaliczeniowy
 
 * `Prezentacja z zajęć 0 <http://slid.es/jbzdak/bd2>`_
 

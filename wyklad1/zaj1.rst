@@ -68,6 +68,8 @@ Należy wykonać zapytanie pobierające poziomy zanieczyszczeń
 By wyeksportować wyniki zapytania należy (po jego wykonaniu)
 wykonać ``File -> Export``.
 
+Wyniki proszę wyeksportować z użyciem ``|`` jako separatora kolumn.
+
 
 Polecenia
 ^^^^^^^^^
@@ -144,6 +146,8 @@ Wyznaczone wartości proszę zaokrąglić w dół do 0.01, przykładowo
 jeśli wg. Państwa wartości te wynoszą odpowiednio 5.1234 oraz 6.0991
 należy w odpowiednie pola formularza wpisać 5.12 oraz 6.09.
 
+Wyniki proszę wysłać z kropką jako separatorem dziesiętnym.
+
 
 Zadanie 9: Klauzula ``GROUP BY``
 ---------------------------------
@@ -163,6 +167,7 @@ Zadanie 10: GROUP BY 2
 Proszę opracować zapytanie zwracające dwie kolumny: ``day`` oraz ``pm_10`` (kolumy
 są w tej kolejności). W kolumnie ``day`` umieszczamy konkretną datę, a w kolumnie
 ``pm_10`` umieszczamy średni poziom :math:`PM_{10}` dla danego dnia.
+Wyniki proszę sortować po dniu pomiaru.
 
 Treść zapytania SQL proszę wysłać na serwer.
 
