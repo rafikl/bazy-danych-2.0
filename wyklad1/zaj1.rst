@@ -6,10 +6,10 @@ Informacje ogólne
 
 Plik do pobrania bazy danych :download:`/wyklad1/data/zaj1.sql`
 
-Komputery laboratoryjne są tak skonfigurowane że by uzyskać połączenie
+Komputery laboratoryjne są tak skonfigurowane, że by uzyskać połączenie
 z bazą danych należy po prostu napisać ``psql`` (bez hasła).
 
-By uzyskać połączenie za pomocą programu ``pgAdminIII`` należy wpisać następujące
+By uzyskać połączenie za pomocą programu ``pgAdminIII``, należy wpisać następujące
 dane:
 
 .. figure:: /wyklad1/data/new-reg.*
@@ -19,8 +19,8 @@ dane:
 Jak działają skrypty sprawdzające
 ---------------------------------
 
-Skrypty sprawdzające porównują wynik zapytania wprowadzonego przez Państwa,
-oraz zapytania modelowego, proszę więc dołożyć szczególnej uwagi by
+Skrypty sprawdzające porównują wynik zapytania wprowadzonego przez Państwa
+oraz zapytania modelowego. Proszę więc dołożyć szczególnej uwagi, by
 Państwa zapytania spełniały wszystkie wymogi opisane w zapytaniu
 (np. sortowanie, nazwy kolumn).
 
@@ -29,11 +29,11 @@ Zadanie 1: Korzystanie z polecenia ``psql`` i przekierowanie wyników zapytań d
 
 
 By wykonać zapytanie w poleceniu ``psql`` należy po prostu wpisać jego treść
-i wcisnąć klawisz enter (proszę pamiętać o tym że zapytania SQL należy
+i wcisnąć klawisz enter (proszę pamiętać o tym, że zapytania SQL należy
 kończyć za pomocą średnika).
 
 By wyniki zapisać do pliku (a nie wyświetlać na konsolę) należy wpisać
-metakomendę: ``\o <<ścieżka do pliku>>``, polecenie to spowoduje że
+metakomendę: ``\o <<ścieżka do pliku>>``, polecenie to spowoduje, że
 wynik każdej następnej komendy będzie zapisany do podanego pliku.
 
 By znów wyświetlać wyniki na ekran należy podać metakomendę ``\o``.
@@ -48,7 +48,7 @@ Polecenia
 Zadanie 2 Korzystanie z programu `pgAdminIII` i eksport wyników zapytań
 ------------------------------------------------------------------------
 
-By wykonać zapytanie należy połączyć się z bazą danych, a następnie
+By wykonać zapytanie, należy połączyć się z bazą danych, a następnie
 wybrać edytor kodu SQL (położenie guzika na obrazku:
 :download:`/wyklad1/data/pgadminIIISQL.png`).
 
@@ -101,7 +101,7 @@ zawieszonego :math:`PM_{10}` w wierszach spełniających
 następujące warunki:
 
 1. Prędkość wiatru jest wyższa od 1
-2. Poziom ozonu jest równy zeru, lub ozon nie był rejestrowany
+2. Poziom ozonu jest równy zeru lub ozon nie był rejestrowany
    tego dnia (posiada wartość ``NULL``). Poziom ozonu zapisany jest w
    kolumnie ``ozon``
 
@@ -138,7 +138,7 @@ Treść zapytania SQL proszę wysłać na serwer.
 Zadanie 8: Wyznaczanie średniej 3
 ----------------------------------
 
-Proszę wyznaczyć dowolną metodą śrendie prędkości wiartu w wierszach
+Proszę wyznaczyć dowolną metodą śrendie prędkości wiatru w wierszach,
 w których poziom pyłu zawieszonego był niższy od 50 oraz w pozostałych
 dniach.
 
@@ -151,13 +151,13 @@ Wyniki proszę wysłać z kropką jako separatorem dziesiętnym.
 
 Zadanie 9: Klauzula ``GROUP BY``
 ---------------------------------
-Przekroszenie dopuszczalnego poziomu :math:`PM_{10}` zawarte
+Przekroczenie dopuszczalnego poziomu :math:`PM_{10}` zawarte
 jest w kolumnie ``przekroczenie``. Proszę teraz opracować
-zapytanie wybierające średnie prędkości wiaru dla wszystkich możliwych
+zapytanie wybierające średnie prędkości wiatru dla wszystkich możliwych
 wartości przekroczenia.
 
-Zapytanie powinno zwracać dwie kolumny: średnią predkość, oraz
-wartość kolumny przekroczenie dla której ją wyznaczono, wynik powinien
+Zapytanie powinno zwracać dwie kolumny: średnią predkość oraz
+wartość kolumny przekroczenie, dla której ją wyznaczono, wynik powinien
 być posortowany po wartości `przekroczenie`.
 
 

@@ -7,7 +7,7 @@ Wprowadzenie
 Jak pewnie Państwo zdążyli się zorientować tabele, które prezentuje, są
 jakoś powiązane z moją działalnością naukową.
 
-Tabela z zeszłych zajęć jest raczej wynikiem zapytanie niż
+Tabela z zeszłych zajęć jest raczej wynikiem zapytania, niż
 źródłem danych, w schemacie, który opracowałem dane są przechowywane w
 tabeli, w której w wierszu przechowujemy:
 
@@ -37,6 +37,9 @@ W tabeli tej przechowywane są:
 * **nazwa** źródła pomiaru
 * **nazwa** rodzaju parametru
 
+
+.. _w2-pk:
+
 Pojęcie klucza głównego
 -----------------------
 
@@ -46,7 +49,7 @@ dany wiersz w danej tabeli.
 Wiemy, że w danej chwili czasowej dane źródło danych powinno nam zwrócić
 co najwyżej jeden pomiar danego rodzaju.
 
-Inaczej w naszej bazie danych, nie może być więcej niż jeden wiersz
+Inaczej w naszej bazie danych, nie może być więcej, niż jeden wiersz
 przechowujący poziom pyłu PM_10 na stacji Warszawa
 komunikacyjna w danej chwili.
 
@@ -63,7 +66,7 @@ Taki schemat ma kilka istotnych wad:
 * Tabela nie jest efektywna jeśli chodzi o rozmiar danych, ponieważ
   np. stacje pomiarowe mają długie nazwy (dokładny wpływ na rozmiar
   tabeli jest trudny do obliczenia, bo różne silniki baz danych
-  w różne silniki mogą stosować różne optymalizacje)
+  mogą stosować różne optymalizacje)
 * By zmienić nazwę stacji muszę dokonać UPDATE na każdym
   wierszu w tabeli (itd).
 * Nie mogę przechować w bazie danych informacji o parametrze, o ile
@@ -107,12 +110,12 @@ do jednego wierszy ``DATA_SOURCE`` i ``POINT_TYPE``.
 Naturalne i syntetyczne (sztuczne) klucze główne
 -------------------------------------------------
 
-Naturalny klucz główny (*z ang.* natural key) to klucz główny na
+Naturalny klucz główny (*z ang.* natural key), to klucz główny, na
 który składają się kolumny już istniejące w bazie danych mające
 znaczenie w *świecie rzeczywistym*. W naszej bazie tabela ``DATA_POINT``
 ma klucz naturalny.
 
-Klucz syntetyczny (*z ang.* surrogate key) to klucz którego wartości
+Klucz syntetyczny (*z ang.* surrogate key), to klucz,,którego wartości
 mają znaczenie tylko wewnątrz bazy danych. W naszej bazie tabele
 ``DATA_SOURCE`` oraz ``POINT_TYPE`` mają klucze syntetyczne, są to
 kolejne liczby naturalne przypisane do danego wiersza.
@@ -126,22 +129,27 @@ do tabeli klucz syntetyczny. Ma on takie zalety:
 * Jego wartość nigdy się nie zmienia (zmianę wartości w klucza naturalnego
   może wymusić zmiana w świecie)
 * Nie zależy od zachowania świata zewnętrznego.
+* Klucze sztuczne są mniejsze, generalnie są intem.
+* Joiny po kluczach sztucznych mogą być szybsze (Sztuczne klucze główne
+  są mniejsze)
 
 Wady kluczy syntetycznych:
 
 * Powoduje dodanie nowej kolumny i nowego indeksu do tabeli
+* Wartość sztucznego klucza nie zależy od zawartości wiersza,
+  co może utrudniać tworzenie rozproszonych baz danych.
 
 Wady kluczy naturalnych
 
 * Zmiana świata zewnętrznego może wymusić zmianę kluczy naturalnych
   w naszej bazie danych.
-* Może się okazać że klucze które są teoretycznie unikalne,
+* Może się okazać, że klucze, które są teoretycznie unikalne,
   wcale takie nie są.
 
 Przykład: numer ``PESEL`` jako klucz główny w tabeli
 *****************************************************
 
-Wszyscy wiedzą że pesel ma takie charakterystyki:
+Wszyscy wiedzą, że pesel ma takie charakterystyki:
 
 * Numer pesel jest unikalny
 * Numer pesel zawiera datę urodzenia
@@ -154,9 +162,9 @@ w praktyce:
 
 Numer pesel był przez lata nadawany *ręcznie* tj. pani w urzędzie
 nadawała go i ręcznie liczyła sumę kontrolną, zdarzają się więc
-osoby które mają taki sam numer pesel (rzadko bo rzadko).
+osoby, które mają taki sam numer pesel (rzadko, bo rzadko, ale są).
 
-Numer pesel zawiera datę urodzenia, jednak zdarzają się dni w których
+Numer pesel zawiera datę urodzenia, jednak zdarzają się dni, w których
 "urodziło się" ponad 10 000 osób, wtedy osobom przypisuje się numery
 pesel z następnych dni.
 
@@ -295,7 +303,7 @@ nie wiedziałby co z tym zrobić.
 Podzapytania w klauzuli `WHERE`
 --------------------------------
 
-Postgresql udostępnia funkcje które z pozwalają przekształcić podzapytanie
+Postgresql udostępnia funkcje, które z pozwalają przekształcić podzapytanie
 w wartość logiczną, `pełna lista tych funkcji
 <http://www.postgresql.org/docs/9.2/static/functions-subquery.html>`_
 
@@ -310,8 +318,8 @@ zawieszony PM10.
 
 Uwaga: Parametr określający poziom pyłu zawieszonego
 ma ``id`` równe 4.
-Znaczenie zapytania Wybieramy nazwę ze wszystkich stacji,
-z tabeli ``"DATA_SOURCE"``, które to stacje spełniają taki warunek
+Znaczenie zapytania: wybieramy nazwę ze wszystkich stacji,
+z tabeli ``"DATA_SOURCE"``, które to stacje spełniają taki warunek,
 że w tabeli ``"DATA_POINT_DAILY"`` istnieją wiersze zawierające
 pomiary pyłu zawieszonego z danej stacji.
 
@@ -336,10 +344,10 @@ Nowe cechy w tym zapytaniu:
 
 * Wiele tabel podanych w klauzuli ``FROM``, poszczególne
   tabele oddzielane są od siebie przecinkiem
-* Klauzula ``AS`` przy nazwie tabeli, powoduje że możemy
+* Klauzula ``AS`` przy nazwie tabeli powoduje, że możemy
   odnosić się do kolumn z tej tabeli za pomocą identyfikatora podanego
   po ``AS``.  Przykładowo w naszym zapytaniu ``ds.name`` oznacza
-  kolumnę ``name`` z tabeli ``"DATA_SOURCE"`` a
+  kolumnę ``name`` z tabeli ``"DATA_SOURCE"``, a
   ``pt.name`` oznacza kolumnę ``name`` z tabeli
   ``"POINT TYPE"``.
   Operator JOIN
@@ -425,7 +433,7 @@ Wybór konkretnego wyrażenia jest zatem kwestią czytelności kodu.
 Relacja wiele-do-wielu
 ----------------------
 
-Relacja wiele do wielu to relacja w której wiele wierszy tabeli A jest
+Relacja wiele do wielu to relacja, w której wiele wierszy tabeli A jest
 powiązanych każdy z wieloma różnymi wierszami tabeli B.
 
 Przykładowo tabela student zawiera studentów, którzy mają zainteresowania,
@@ -565,13 +573,13 @@ nadanie aliasu jest wymagane!
 Window Functions --- nieobowiązkowe
 -----------------------------------
 
-Zasadniczo SQL zakłada że poszczególne wiersze w zapytaniu są od siebie
+Zasadniczo SQL zakłada, że poszczególne wiersze w zapytaniu są od siebie
 niezależne.
 
 Window Functions pozwalają na wykorzystanie w zapytaniu wielu wierszy
 jakoś powiązanych z bieżąco przetwarzanym wierszem.
 
-Przykładowo chcemy wybrać to na ile wartość w danym wierszu różni się
+Przykładowo chcemy wybrać to, na ile wartość w danym wierszu różni się
 od średniej dla danej stacji i danego parametru:
 
 
