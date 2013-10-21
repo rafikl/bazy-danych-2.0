@@ -1,0 +1,459 @@
+ 
+     
+    Zajęcia II 
+     
+     
+     
+     
+Wykład 2 
+Tworzenie tabel 
+     
+        Schemat a baza danych 
+         Uwaga tutaj Postgres działa zdecydowanie inaczej niż MySQL. 
+    Database cluster 
+     
+        Jedna instancja Postgresa zawierająca wielu użytkowników 
+        oraz wiele baz danych. Uwaga --- w tym terminie nie chodzi o klaster 
+        składający się z wielu komputerów, słowo klaster dotyczy wielu 
+        odseparowanych baz danych. 
+     
+    Database 
+     
+        Jedna baza danych. Bazy danych są odseparowane od siebie, tj. na przykład 
+        nie można wykonać polecenia, które wybiera dane z tabel w dwóch 
+        bazach danych (znaczy wszystko można, tylko jest to dość skomplikowane, 
+        postgres zawiera rozszerzenie dblink, które pozwala na dostęp do innych 
+        baz danych czy klastrów baz danych, jednak rozszerzenie to łączy się 
+        do zdalnej bazy danych po za pośrednictwem połączenia TCP/IP, 
+        jak każdy inny zewnętrzny klient). 
+     
+    Schemat bazy danych 
+     
+        Zbiór tabel, procedur itp. Schematy w jednej bazie danych mogą się 
+        ze sobą komunikować. 
+     
+    Ograniczenia baz danych 
+     W klastrze może być jeden użytkownik o danej nazwie. 
+     Tabele w różnych bazach danych się nie widzą (to jest akurat dobre!) 
+    Odnoszenie się do tabel w innym schemacie 
+     By odnieść się do tabeli w innym schemacie należy nazwę tabeli 
+        poprzedzić nazwą schematu, tj. by wybrać dane z tabeli FOO 
+        w schemacie foo należy wykonać polecenie: 
+    SELECT * FROM foo.FOO; 
+    Ustawianie domyślnego schematu 
+     W każdej bazie danych postgresa jest schemat public, który 
+        jest wykorzystywany jako domyślny schemat, tak więc po napisaniu 
+SELECT * FROM foo; 
+      Wykonywane jest tak na prawdę: 
+SELECT * FROM public.foo; 
+     By zmienić domyślny schemat należy wykonać polecenie:
+SET search_path TO foo, bar, baz
+     Działa to trochę jak zmienna PATH w UNIXie, tj. jeśli po wykonaniu polecenia 
+        podanego wyżej przy próbie odniesienia się do tabeli FOO, 
+        użyta zostanie tabela foo.FOO, a jeśli ta nie istnieje, 
+        zostanie użyte bar.Foo itp. 
+     Polecenie SET działa dla bieżącego połączenia, można 
+        ustawić też search_path dla użytkownika, schematu bazy danych, 
+        cz yw pliku konfiguracyjnym polecenia psql. 
+     Więcej informacji: na stackverflow. 
+     
+     
+        Polecenie INSERT 
+         Polecenie insert jest prostsze niż SELECT. 
+
+     Przykładowo: 
+INSERT INTO foo("foo", "bar") VALUES (1,2), (2,3), (3,4); 
+     polecenie to oznacza: Chcę wstawić wiersze do tabeli "foo", podam teraz 
+        listę wartości w kolumnach "foo" i "bar", wartości w pierwszym wstawianym 
+        wierszu to 1 i 2, w drugim 2 i 3, w trzecim 3 i 4. 
+     Listę kolumn można pominąć, wtedy wstawiane wstawiamy wartości do 
+        wszystkich kolumn (w tej kolejności, w której zostały one zdefiniowane w 
+        tabeli). Nie polecam tego rozwiązania. 
+     Możliwe jest też wstawienie do wiersza wartości domyślnej danej kolumny 
+         (jaka by ona nie była) za pomocą słowa kluczowego DEFAULT 
+     Takie wyrażenie: 
+INSERT INTO "STUDENT_2"(id) VALUES (DEFAULT); 
+     Spowoduje umieszczenie w kolumnie id domyślnej wartości. 
+    Inne operacje na wierszach 
+    DELETE FROM FOO WHERE wyrażenie_logiczne; 
+    UPDATE FOO set BAR="baz" WHERE wyrażenie logiczne. 
+     
+     
+        Typy kolumn 
+         
+             
+                Jest tego trochę 
+            . 
+        Przydatne typy danych: 
+    character varying 
+     
+        Ciąg znaków o zmiennej długości. Uwaga: większość baz danych wymaga 
+        podania maksymalnej ilości znaków w takim typie, postgres natomiast 
+         
+            tego nie wymaga 
+        . 
+     
+    text 
+     
+        Praktycznie odpowiednik character varying. 
+     
+    smallint, integer, and bigint 
+     
+        Liczby całkowite różnych rozmiarów 
+     
+    numeric 
+     
+        Liczba zmiennoprzecinkowa o ustalonej (dużej) dokładności. Dokładne  
+        wyjaśnienie na  
+        na wiki i w 
+        podręczniku 
+     
+    real, double precision 
+     
+        Liczba zmiennoprzecinkowa o ustalonej dokładności 64bity. Dokładność 
+        tych liczb jest taka jak systemu operacyjnego. 
+     
+    date 
+     
+        Data: dzień, miesiąc rok. Umieszczanie dat: 
+    date '2001-09-28' 
+     
+    time 
+     
+        Godzina (dokładność do milisekundy) 
+     
+    timestamp 
+     
+        Data i godzina 
+     
+     
+     
+        Tworzenie tabel 
+         Polecam robić to za pomocą interfejsu administracyjnego 
+            pgadmin3. Jest szybciej niż przez konsolę. 
+         Tabela w postgresql składa się z: 
+         
+            Listy kolumn 
+            Ograniczeń 
+            Indeksów 
+            triggerów (o nich potem) 
+            Zasad (o tym nie powiemy) 
+         
+        Indeksy 
+         Indeksy są techniką pozwalającą na przyśpieszanie wykonywania zapytań, 
+        bez indeksów każde zapytanie musi odczytać całą tabelę, tj. 
+            takie zapytanie: 
+SELECT name FROM student WHERE id = 5; 
+         Będzie odczytywać wiersze z tabeli jeden po drugim, aż trafi na 
+            indeks o id równym pięć wtedy go zwróci. 
+         Indeks jest miejscem, w którym id są posortowane, 
+            a wraz z nim przechowywana jest informacja gdzie znajduje się 
+            rząd o danym id. 
+         W takim wypadku baza danych musi przeszukać indeks (co średnio 
+            zajmuje jej log2(n) odczytów, a potem odczytuje 
+            z dysku dobry wiersz. 
+         Wady indeksów: 
+         
+             
+                Zwiększają rozmiar bazy danych, często rozmiar indeksów do tabeli 
+                jest większy, niż rozmiar tabeli. 
+             
+             
+                Zwalniają dodawanie wierszy (bo dodając wiersz baza musi odświeżyć 
+                wszystkie indeksy!) 
+             
+         
+        Triggery 
+         Są to małe kawałki SQL uruchamiane przed lub po takich operacjach jak 
+            wstawienie, zmiana czy usunięcie wiersza. 
+     
+     
+        Tworzenie tabel 
+         Do tworzenia tabel służy klauzula: 
+CREATE TABLE "FOO" 
+( 
+    [lista kolumn, może być pusta] 
+); 
+         By zmienić zestaw kolumn należy wykonać 
+ALTER TABLE "FOO" ADD COLUMN ....; 
+ALTER TABLE "FOO" DROP COLUMN nazwa; 
+ALTER TABLE "FOO" RENAME COLUMN nazwa1 TO nazwa2; 
+     
+     
+        Usuwanie tabel 
+DROP TABLE "FOO": 
+     
+     
+        Tworzenie kolumn 
+         Definicja kolumny w najprostszej postaci jest taka: 
+    nazwa_kolumny typ; 
+         
+        Na przykład: 
+CREATE TABLE "FOO" 
+( 
+    pk integer 
+); 
+         albo: 
+ALTER TABLE "FOO" ADD COLUMN pk integer; 
+     
+     
+        Domyślne wartości 
+         Do każdej kolumny możemy dodać domyślną wartość, tj. wartość która 
+            będzie przypisana do kolumny, jeśli w poleceniu INSERT 
+            dana kolumna nie będzie określona. 
+         Klauzula default może określać wartość domyślną jako stałą, lub np. 
+            wynik wywołania funkcji. 
+         Klauzula default nie umożliwia odnoszenia się do pozostałych kolumn 
+            w danym wierszu (taka funkcjonalność możliwa jest do osiągnięcia 
+            za pomocą triggera). 
+CREATE TABLE products ( 
+    product_no integer DEFAULT nextval('products_product_no_seq'), -- default jako funkcja 
+    name text, 
+    price numeric DEFAULT 9.99 -- stałe default 
+); 
+     
+     
+    Klucze główne 
+         Klucz główny jednoznacznie identyfikuje dany wiersz. Dana tabela 
+        może być łatwo edytowana za pomocą edytora pgAdmin III. 
+        Tylko wtedy, gdy ma klucz główny. 
+         
+                Klucze główne w podręczniku postgresql 
+             
+     
+     
+        Proste klucze główne 
+         Klucze główne składające się z pojedynczej kolumny nazywamy prostymi. 
+         Składnia ich tworzenia jest taka: 
+  CREATE TABLE "BAR" 
+( 
+    pk integer primary key 
+); 
+        Możliwa jest też druga składnia: 
+CREATE TABLE "BAZ" 
+( 
+    pk integer, 
+    primary key (pk) 
+); 
+         Drugi sposób określania kluczy głównych jest o tyle wygodny, że 
+        wydziela definicję danych od definicji więzów. 
+     
+     
+        Naturalne klucze główne 
+         Naturalny klucz główny to klucz, który odzwierciedla znaczenie biznesowe 
+        danego komponentu. 
+         Przykładowo kiedy przechowujemy dane obywateli, możemy używać numeru 
+            PESEL jako klucza głównego w tabeli. Taki klucz główny będzie kluczem 
+            naturalnym. 
+     
+     
+        Sztuczne (z ang.surrogate) klucze główne 
+         Sztuczne klucze główne to klucze główne, które nie mają żadnego 
+            biznesowego znaczenia. 
+         Wybór między kluczem naturalnym a sztucznym jest trudną decyzją. 
+         Argumenty za kluczami sztucznymi: 
+         
+             Klucze sztuczne są mniejsze, generalnie są intem. 
+             Joiny po kluczach sztucznych mogą być szybsze (generalnie 
+                klucze sztuczne są mniejsze. 
+             Klucze naturalne mogą mieć ukryte wady, których zmiana może być 
+                bardzo trudna. Na przykład okazuje się, że (starsze) numery pesel 
+                nie są niepowtarzalne, tj. w czasach, w których były nadawane 
+                ręcznie osoby je wydające czasem się myliły. Klucze sztuczne nie 
+                mają tego problemu. 
+             Ich znaczenie i format mogą się zmienić. Na przykład PW może 
+                kiedyś zmienić format numeru albumu. Klucze sztuczne nie mogą 
+                być zmienione za pomocą decyzji kogoś innego, niż operator 
+                systemu bazodanowego. 
+         
+         Argumenty za kluczami naturalnymi 
+         
+             Wartość sztucznego klucza nie zależy od zawartości wiersza, 
+            co może utrudniać tworzenie rozproszonych baz danych. Na przykład 
+            takie same wiersze umieszczone w dwóch bazach danych mogą mieć 
+            różne sztuczne klucze główne. 
+             Klucze sztuczne to dodatkowa kolumna w bazie danych. 
+         
+     
+     
+        Złożone klucze główne 
+         Złożone klucze główne to klucze, na które składa się wiele kolumn. 
+         Przykładowo mamy tabelę, która obrazuje relację studenta i promotora 
+            tabela ta będzie miała taką definicję: 
+CREATE TABLE "PROMOTOR_LINK" 
+( 
+   student_id integer, 
+   pracownik_id integer, 
+    PRIMARY KEY (student_id, pracownik_id) 
+); 
+         Wiersz będzie jednoznacznie identyfikowany przez trzy kolumny: 
+            studenta, pracownika oraz rodzaj pracy, którą student napisał a 
+            promotor wypromował. 
+     
+     
+        Generowanie kluczy głównych 
+         Wartości sztucznych kluczy głównych muszą być generowane przez 
+            bazę danych. 
+         Najprostszą metodą generowania kluczy głównych jest użycie typu 
+            SERIAL do kolumny oznaczającej klucz główny: 
+CREATE TABLE "STUDENT_2" 
+( 
+  id serial NOT NULL, 
+  CONSTRAINT "STUDENT_2_pkey" PRIMARY KEY (id ) 
+) 
+         Teraz kolejnym wstawianym wierszom kolumny id będą 
+            przypisywane kolejne liczby naturalne. 
+         Takie podejście może mieć pewne wady: podczas 
+            wstawiania wiersza musimy nie tylko umieścić dane w bazie danych, 
+            ale również odebrać nadaną wartość klucza głównego. Co może być 
+            niewydajne przy wstawianiu miliona wierszy do bazy danych. 
+         By odebrać od bazy danych wartość nadanego id możemy 
+            użyć klauzuli, (która jest rozszerzeniem SQL i działa 
+            tylko w postgresql): 
+INSERT INTO "STUDENT_2"(id) VALUES (DEFAULT) 
+	RETURNING id; 
+     
+     
+        Sekewencje 
+         Bardziej wydajną metodą generowania kluczy głównych są sekwencje. 
+         Sekwencja czymś co zwraca kolejne liczby naturalne i jest skonstruowana 
+            tak, że bez względu na sposób dostępu sekwencja nigdy nie zwróci 
+            tej samej liczby wielokrotnie. 
+         By stworzyć sekwencję należy wykonać polecenie: 
+        CREATE SEQUENCE FOOBAR; 
+         Do pobrania następnej liczby z sekwencji służy funkcja 
+            nextval. 
+            By stworzyć klucz główny generowany z sekwencji można wykonać: 
+CREATE TABLE products ( 
+    product_no integer DEFAULT nextval('products_product_no_seq') 
+); 
+         Sekwencje mają tą przewagę, że możliwe jest zarezerwowanie wielu 
+            przyszłych wartości kluczy głównych na raz. 
+     
+     
+        Klucze obce 
+         By jedna tabela odnosiła się do innej musimy dodać kolejne 
+            ograniczenie, tzw. klucz obcy. 
+         Powiedzmy, że tabele student i pracownik z poprzedniego przykładu 
+            mają taką definicję: 
+CREATE TABLE "STUDENT" 
+( 
+  id integer NOT NULL, 
+  CONSTRAINT "STUDENT_pkey" PRIMARY KEY (id ) 
+); 
+CREATE TABLE "PRACOWNIK" 
+( 
+  id integer NOT NULL, 
+  CONSTRAINT "PRACOWNIK_pkey" PRIMARY KEY (id ) 
+) 
+         W takim wypadku do tabeli "PROMOTOR_LINK" musimy dodać takie 
+            ograniczenia: 
+ALTER TABLE "PROMOTOR_LINK" 
+  ADD CONSTRAINT "PROMOTOR_LINK_student_id_fkey" FOREIGN KEY (student_id) 
+      REFERENCES "STUDENT" (id); 
+ALTER TABLE "PROMOTOR_LINK" 
+  ADD CONSTRAINT "PROMOTOR_LINK_promotor_id_fkey" FOREIGN KEY (pracownik_id) 
+      REFERENCES "PROMOTOR" (id); 
+         Składnia tego wyrażenia jest taka: 
+    ADD CONSTRAINT [[NAZWA]] FOREINGN KEY ([[lista kolumn w lokalnej tabeli]]) 
+        REFERENCES [[nazwa zdalnej tabeli]] ([[lista kolumn w zdalnej tabeli]]; 
+         Klucze obce gwarantują, że jeśli w danym wierszu w kolumnie 
+            student_id jest wartość 4, to rzeczywiście istnieje 
+            wiersz w tabeli STUDENT którego id wynosi 4. 
+     
+     
+        Złożone klucze obce 
+         Jeśli tabela, do której się odnosimy ma złożony klucz główny to 
+            klucze obce do tej tabeli muszą być złożone. 
+         Powiedzmy, że mamy tabelę praca, która odwzorowuje pracę dyplomową, 
+            wartość w tej tabeli jest jednoznacznie identyfikowana przez dwie 
+            kolumny: rozdaj pracy i id studenta: 
+CREATE TABLE "Praca" 
+( 
+  student_id integer NOT NULL, 
+  type integer NOT NULL, 
+  CONSTRAINT "Praca_pkey" PRIMARY KEY (student_id , type ) 
+) 
+         By dodać odniesienie to do pracy do tabeli PROMOTOR_LINK 
+            musielibyśmy dodać kolumnę praca_type oraz 
+            złożony klucz obcy: 
+ALTER TABLE "PROMOTOR_LINK" ADD COLUMN praca_type integer; 
+ALTER TABLE "PROMOTOR_LINK" ALTER COLUMN praca_type SET NOT NULL; 
+ALTER TABLE "PROMOTOR_LINK" ADD CONSTRAINT "PROMOTOR_LINK_student_id_fkey1" FOREIGN KEY (student_id, praca_type) 
+  REFERENCES "Praca" (student_id, type) 
+     
+     
+        Cascade 
+         Silnik bazy danych nie pozwoli na wstawienie rzędu danych do tabeli 
+            PROMOTOR_LINK, jeśli w tym rzędzie będzie odniesienie 
+            do nieistniejącego studenta. Jednak co się stanie jeśli już po 
+            utworzeniu wiersza w tabeli PROMOTOR_LINK usuniemy 
+            studenta, do którego dany wiersz się odnosi? 
+         Ponieważ serwer wymusza prawdziwość ograniczeń zawsze, 
+            pod koniec transakcji (czym są transakcje powiemy później) 
+            baza danych zgłosi wyjątek, że ograniczenie jest niespełnione i zmiany 
+            zostaną wycofane. 
+         Ponieważ takie zachowanie może nie być pożądane, może zostać 
+            skonfigurowane, za pomocą dodatkowych klauzul, które 
+            zarządzają propagacją (z ang. cascade) zmian: 
+  CONSTRAINT "PROMOTOR_LINK_student_id_fkey1" FOREIGN KEY (student_id, praca_type) 
+      REFERENCES "Praca" (student_id, type) 
+      ON UPDATE NO ACTION ON DELETE NO ACTION 
+         Dokładniej rozszyfrujmy linijkę: 
+            ON UPDATE NO ACTION ON DELETE NO ACTION. 
+         Linia ta pozwala wybrać akcję do wykonania przez serwer, gdy 
+            zdalny rząd danych jest usuwany (ON DELETE) bądź 
+            zmieniany (ON UPDATE). 
+         Akcje do wybrania są takie: 
+         
+             NO ACTION spowoduje nie wykonanie żadnej akcji, 
+                co może spowodować wyrzucenie wyjątku podczas zamykania transakcji 
+             RESTRCT spowoduje wyrzucenie wyjątku od razu! 
+             SET NULL spowoduje ustawienie wartości NULL w 
+                kolumnach odnoszących się do kasowanego lub zmienianego wiersza. 
+             SET DEFAULT spowoduje ustawienie domyślnej wartości 
+                w kolumnach odnoszących się do kasowanego lub zmienianego wiersza 
+             CASCADE jeśli zdalny wiersz jest kasowany spowoduje 
+                skasowanie wierszy, które się do niego odnoszą, jeśli jest 
+                zmieniany spowoduje zmianę wartości w tej tabeli by ciągle 
+                odnosiły się do tego samego wiersza. 
+     
+     
+     
+        Ograniczenie NOT NULL 
+         Domyślnie kolumny zawsze mogą przyjmować wartość pustą (NULL) 
+         Dodanie ograniczenia NOT NULL umożliwia wymuszenie by wartości w danej kolumnie były różne od null. 
+     
+     
+        Ograniczenie CHECK 
+         Ograniczenie check pozwala na sprawdzenie wyniku dowolnej operacji logicznej 
+            wykonywanej na danym wierszu (operacja ta nie może wykonywać 
+            zapytań ani odnosić się do innych rzędów tabeli). 
+         Przykładowo by sprawdzić czy email jest poprawny należy dodać takiego 
+            CHECKa: 
+CREATE TABLE "FOO" 
+( 
+  pk integer, 
+  CONSTRAINT "FOO_email_check" CHECK (email LIKE '%@%.%') 
+) 
+         Teraz takie zapytanie się powiedzie: 
+INSERT INTO "FOO"(email) VALUES('bzdak@poczta.if.pw.edu.pl'); 
+         a takie nie: 
+INSERT INTO "FOO"(email) VALUES('bar'); 
+     
+     
+        Nazwy constraintów 
+         Ograniczenia w bazie danych mają swoje nazwy. Nazwy te mogą być 
+            generowane automatycznie, ale warto je nadać. 
+         Służą one głownie do umożliwienia zmiany więzów w przyszłości. 
+     
+      Strona ta stosuje pliki cookies generowane przez system gogole analytics. 
+        Można sobie je wyłączyć do jej prawidłowego działania. 
+    var _gaq = _gaq || []; 
+    _gaq.push(['_setAccount', 'UA-39180012-1']); 
+    _gaq.push(['_trackPageview']); 
+    (function() { 
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; 
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; 
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); 
+    })(); 
