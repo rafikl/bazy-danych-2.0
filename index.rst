@@ -14,6 +14,7 @@ Wykłady
 
    wyklad1/wyk1.rst
    wyklad2/wyk2.rst
+   wyklad3/wyk3.rst
 
 Zajęcia
 -------
@@ -22,6 +23,7 @@ Zajęcia
    :maxdepth: 1
 
    wyklad1/zaj1.rst
+   wyklad2/zaj2.rst
 
 Pozostałe
 ---------

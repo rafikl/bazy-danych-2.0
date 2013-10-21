@@ -107,75 +107,10 @@ wiele-do-jednego (many-to-one), tj.
 wiele wierszy z tabeli ``DATA_POINT`` będzie się odnosić
 do jednego wierszy ``DATA_SOURCE`` i ``POINT_TYPE``.
 
-Naturalne i syntetyczne (sztuczne) klucze główne
--------------------------------------------------
+Naturalne i syntetyczne klucze główne
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Naturalny klucz główny (*z ang.* natural key), to klucz główny, na
-który składają się kolumny już istniejące w bazie danych mające
-znaczenie w *świecie rzeczywistym*. W naszej bazie tabela ``DATA_POINT``
-ma klucz naturalny.
-
-Klucz syntetyczny (*z ang.* surrogate key), to klucz,,którego wartości
-mają znaczenie tylko wewnątrz bazy danych. W naszej bazie tabele
-``DATA_SOURCE`` oraz ``POINT_TYPE`` mają klucze syntetyczne, są to
-kolejne liczby naturalne przypisane do danego wiersza.
-
-Klucze naturalne kontra klucze syntetyczne
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Według wielu administratorów w zasadzie zawsze należy dodawać
-do tabeli klucz syntetyczny. Ma on takie zalety:
-
-* Jego wartość nigdy się nie zmienia (zmianę wartości w klucza naturalnego
-  może wymusić zmiana w świecie)
-* Nie zależy od zachowania świata zewnętrznego.
-* Klucze sztuczne są mniejsze, generalnie są intem.
-* Joiny po kluczach sztucznych mogą być szybsze (Sztuczne klucze główne
-  są mniejsze)
-
-Wady kluczy syntetycznych:
-
-* Powoduje dodanie nowej kolumny i nowego indeksu do tabeli
-* Wartość sztucznego klucza nie zależy od zawartości wiersza,
-  co może utrudniać tworzenie rozproszonych baz danych.
-
-Wady kluczy naturalnych
-
-* Zmiana świata zewnętrznego może wymusić zmianę kluczy naturalnych
-  w naszej bazie danych.
-* Może się okazać, że klucze, które są teoretycznie unikalne,
-  wcale takie nie są.
-
-Przykład: numer ``PESEL`` jako klucz główny w tabeli
-*****************************************************
-
-Wszyscy wiedzą, że pesel ma takie charakterystyki:
-
-* Numer pesel jest unikalny
-* Numer pesel zawiera datę urodzenia
-* Numer pesel posiada sumę kontrolną
-* Numer pesel jest niezmienny (raz nadany nie zmieni się nigdy)
-* Każdy ma pesel
-* Numer pesel będzie obowiązywać zawsze.
-
-w praktyce:
-
-Numer pesel był przez lata nadawany *ręcznie* tj. pani w urzędzie
-nadawała go i ręcznie liczyła sumę kontrolną, zdarzają się więc
-osoby, które mają taki sam numer pesel (rzadko, bo rzadko, ale są).
-
-Numer pesel zawiera datę urodzenia, jednak zdarzają się dni, w których
-"urodziło się" ponad 10 000 osób, wtedy osobom przypisuje się numery
-pesel z następnych dni.
-
-Numer pesel posiada sumę kontrolną, ale czasem jest ona błędnie wyliczona
-(znów: pesele były przyznawane *ręcznie*).
-
-Można zmienić sobie numer ``PESEL`` (`Ustawa o ewidencji ludości i
-dowodach osobistych <http://isap.sejm.gov.pl/DetailsServlet?id=WDU19740140085>`_)
-
-Niektóre osoby przebywające w Polsce nie posiadają numeru pesel
-(np. obcokrajowcy).
+Opisane są na następnym wykładzie: :ref:`_w3-naturalne-syntetyczne-pk`.
 
 Wybieranie danych ze schematu z relacjami
 -----------------------------------------

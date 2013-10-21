@@ -7,7 +7,7 @@ koncentruje się tutaj raczej na praktycznych aspekatch użytkowania i tworzenia
 baz danych.
 
 Wygenerowaną stronę można obejrzeć pod takim adresem:
-`http://db.fizyka.pw.edu.pl/bazy_danych_ed_20/`_.
+`http://db.fizyka.pw.edu.pl/bazy_danych_ed_20/ <http://db.fizyka.pw.edu.pl/bazy_danych_ed_20/>`_.
 
 Całość jest udostępniona na licencji Creative Commons 3.0: uznanie autorstwa:
 

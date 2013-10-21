@@ -65,7 +65,7 @@ Wykonywane jest tak na prawdę:
 
 By zmienić domyślny schemat, należy wykonać polecenie:
 
-.. code-block::
+.. code-block:: sql
 
     SET search_path TO foo, bar, baz
 
@@ -144,7 +144,7 @@ UPDATE
 
 Przykładowo:
 
-.. code-block::
+.. code-block:: sql
 
     UPDATE FOO set "foo"="baz"-1, "bar"="baz" WHERE "foo" < "bar"
 
@@ -170,7 +170,7 @@ Definicja tabeli w postgresql składa się z:
 
 Do tworzenia tabel służy klauzula:
 
-.. code-block::
+.. code-block:: sql
 
     CREATE TABLE "FOO"
     (
@@ -241,6 +241,10 @@ Typy kolumn
 
     Data i godzina (dokładność do milisekundy), z określeniem strefy czasowej.
 
+``serial``
+
+    Więcej w rozdziale :ref:`w3-generowanie-pk`.
+
 
 Definiowanie kolumn
 ^^^^^^^^^^^^^^^^^^^
@@ -310,7 +314,7 @@ Indeksy są techniką pozwalającą na przyśpieszanie wykonywania zapytań,
 bez indeksów każde zapytanie musi odczytać całą tabelę, tj.
 takie zapytanie:
 
-.. code-block::
+.. code-block:: sql
 
     SELECT name FROM student WHERE id = 5;
 
@@ -382,6 +386,18 @@ Złożone klucze główne to klucze, na które składa się wiele kolumn.
 Przykładowo mamy tabelę, która obrazuje relację studenta i promotora
 tabela ta będzie miała taką definicję:
 
+.. code-block:: sql
+
+    CREATE TABLE "PROMOTOR_LINK"
+    (
+       student_id integer,
+       pracownik_id integer,
+        PRIMARY KEY (student_id, pracownik_id)
+    );
+
+Wiersz będzie jednoznacznie identyfikowany przez trzy kolumny:
+studenta, pracownika oraz rodzaj pracy, którą student napisał a
+promotor wypromował.
 
 .. _w3-naturalne-syntetyczne-pk:
 
@@ -399,7 +415,7 @@ mają znaczenie tylko wewnątrz bazy danych. W naszej bazie tabele
 kolejne liczby naturalne przypisane do danego wiersza.
 
 Klucze naturalne kontra klucze syntetyczne
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+******************************************
 
 Według wielu administratorów w zasadzie zawsze należy dodawać
 do tabeli klucz syntetyczny. Ma on takie zalety:
@@ -425,4 +441,328 @@ Wady kluczy naturalnych
   wcale takie nie są.
 
 
+Przykład: numer ``PESEL`` jako klucz główny w tabeli
+*****************************************************
 
+Wszyscy wiedzą, że pesel ma takie charakterystyki:
+
+* Numer pesel jest unikalny
+* Numer pesel zawiera datę urodzenia
+* Numer pesel posiada sumę kontrolną
+* Numer pesel jest niezmienny (raz nadany nie zmieni się nigdy)
+* Każdy ma pesel
+* Numer pesel będzie obowiązywać zawsze.
+
+w praktyce:
+
+Numer pesel był przez lata nadawany *ręcznie* tj. pani w urzędzie
+nadawała go i ręcznie liczyła sumę kontrolną, zdarzają się więc
+osoby, które mają taki sam numer pesel (rzadko, bo rzadko, ale są).
+
+Numer pesel zawiera datę urodzenia, jednak zdarzają się dni, w których
+"urodziło się" ponad 10 000 osób, wtedy osobom przypisuje się numery
+pesel z następnych dni.
+
+Numer pesel posiada sumę kontrolną, ale czasem jest ona błędnie wyliczona
+(znów: pesele były przyznawane *ręcznie*).
+
+Można zmienić sobie numer ``PESEL`` (`Ustawa o ewidencji ludości i
+dowodach osobistych <http://isap.sejm.gov.pl/DetailsServlet?id=WDU19740140085>`_)
+
+Niektóre osoby przebywające w Polsce nie posiadają numeru pesel
+(np. obcokrajowcy).
+
+.. _w3-generowanie-pk:
+
+Generowanie kluczy głównych
+***************************
+
+Wartości sztucznych kluczy głównych muszą być generowane przez
+bazę danych.
+
+Najprostszą metodą generowania kluczy głównych jest użycie typu
+``SERIAL`` do kolumny oznaczającej klucz główny:
+
+
+.. code-block:: sql
+
+    CREATE TABLE "STUDENT_2"
+    (
+        id serial NOT NULL,
+        CONSTRAINT "STUDENT_2_pkey" PRIMARY KEY (id )
+    )
+
+Teraz kolejnym wstawianym wierszom kolumny ``id`` będą
+przypisywane kolejne liczby naturalne.
+
+Takie podejście może mieć pewne wady: podczas
+wstawiania wiersza musimy nie tylko umieścić dane w bazie danych,
+ale również odebrać nadaną wartość klucza głównego. Co może być
+niewydajne przy wstawianiu miliona wierszy do bazy danych.
+
+By odebrać od bazy danych wartość nadanego ``id`` możemy
+użyć klauzuli (jest ona rozszerzeniem SQL i działa
+tylko w postgresql):
+
+.. code-block:: sql
+
+    INSERT INTO "STUDENT_2"(id) VALUES (DEFAULT)
+    RETURNING id;
+
+
+Sekewencje
+**********
+
+Bardziej wydajną metodą generowania kluczy głównych są sekwencje.
+Sekwencja czymś co zwraca kolejne liczby naturalne i jest skonstruowana
+tak, że bez względu na sposób dostępu sekwencja nigdy nie zwróci
+tej samej liczby wielokrotnie.
+
+By stworzyć sekwencję należy wykonać polecenie:
+
+.. code-block:: sql
+
+    CREATE SEQUENCE FOOBAR;
+
+Do pobrania następnej liczby z sekwencji służy funkcja
+nextval.
+
+By stworzyć klucz główny generowany z sekwencji można wykonać:
+
+.. code-block:: sql
+
+    CREATE TABLE products (
+        product_no integer DEFAULT nextval('products_product_no_seq')
+    );
+
+Sekwencje mają tą przewagę nad kolumnami ``serial``, że możliwe jest zarezerwowanie wielu
+przyszłych wartości kluczy głównych na raz.
+
+Klucze obce
+^^^^^^^^^^^
+
+
+By jedna tabela odnosiła się do innej musimy dodać kolejne
+ograniczenie, tzw. klucz obcy.
+
+Powiedzmy, że tabele student i pracownik z poprzedniego przykładu
+mają taką definicję:
+
+.. code-block:: sql
+
+    CREATE TABLE "STUDENT"
+    (
+      id integer NOT NULL,
+      CONSTRAINT "STUDENT_pkey" PRIMARY KEY (id ),
+      name character varying
+    );
+
+    CREATE TABLE "PRACOWNIK"
+    (
+      id integer NOT NULL,
+      CONSTRAINT "PRACOWNIK_pkey" PRIMARY KEY (id ),
+      name character varying
+    )
+
+
+W takim wypadku do tabeli ``"PROMOTOR_LINK"`` musimy dodać takie
+ograniczenia:
+
+.. code-block:: sql
+
+    ALTER TABLE "PROMOTOR_LINK"
+      ADD CONSTRAINT "PROMOTOR_LINK_student_id_fkey" FOREIGN KEY (student_id)
+          REFERENCES "STUDENT" (id);
+    ALTER TABLE "PROMOTOR_LINK"
+      ADD CONSTRAINT "PROMOTOR_LINK_promotor_id_fkey" FOREIGN KEY (pracownik_id)
+          REFERENCES "PROMOTOR" (id);
+
+
+Składnia tego wyrażenia jest taka:
+
+.. code-block:: sql
+    
+    ADD CONSTRAINT [[NAZWA]] FOREINGN KEY ([[lista kolumn w lokalnej tabeli]])
+    REFERENCES [[nazwa zdalnej tabeli]] ([[lista kolumn w zdalnej tabeli]];
+
+Klucze obce gwarantują, że jeśli w danym wierszu w kolumnie
+``student_id`` jest wartość ``4``, to rzeczywiście istnieje
+wiersz w tabeli ``STUDENT`` którego ``id`` wynosi ``4``.
+
+Klucze obce pozwalają bezpiecznie pisać polecenia ``SELECT`` z klauzulą ``JOIN``, 
+przy zapytaniu: 
+
+.. code-block:: sql
+
+    SELECT student.name, promotor.name FROM "PROMOTOR_LINK" AS pl 
+        JOIN "STUDENT" student ON (student.id = pl.student_id)
+        JOIN "PROMOTOR" promotor ON (promotor.id = pl.promotor_id)
+
+wiemy że dla student o ``id`` równym ``student_id`` będzie zawsze istnieć:
+gwarantuje to ``FOREIGN KEY``.
+
+
+Złożone klucze obce
+^^^^^^^^^^^^^^^^^^^
+
+Jeśli tabela, do której się odnosimy ma złożony klucz główny to
+klucze obce do tej tabeli muszą być złożone.
+Powiedzmy, że mamy tabelę praca, która odwzorowuje pracę dyplomową,
+wartość w tej tabeli jest jednoznacznie identyfikowana przez dwie
+kolumny: rozdaj pracy i id studenta:
+
+.. code-block:: sql
+
+    CREATE TABLE "Praca"
+    (
+      student_id integer NOT NULL,
+      type integer NOT NULL,
+      CONSTRAINT "Praca_pkey" PRIMARY KEY (student_id , type )
+    )
+
+By dodać odniesienie to do pracy do tabeli ``PROMOTOR_LINK``
+musielibyśmy dodać kolumnę ``praca_type`` oraz
+złożony klucz obcy:
+
+.. code-block:: sql
+
+    ALTER TABLE "PROMOTOR_LINK" ADD COLUMN praca_type integer;
+    ALTER TABLE "PROMOTOR_LINK" ALTER COLUMN praca_type SET NOT NULL;
+    ALTER TABLE "PROMOTOR_LINK" ADD CONSTRAINT "PROMOTOR_LINK_student_id_fkey1" FOREIGN KEY (student_id, praca_type)
+      REFERENCES "Praca" (student_id, type)
+
+Cascade
+^^^^^^^^
+
+Silnik bazy danych nie pozwoli na wstawienie rzędu danych do tabeli
+`PROMOTOR_LINK`, jeśli w tym rzędzie będzie odniesienie
+do nieistniejącego studenta. Jednak co się stanie jeśli już po
+utworzeniu wiersza w tabeli `PROMOTOR_LINK` usuniemy
+studenta, do którego dany wiersz się odnosi?
+
+Ponieważ serwer wymusza prawdziwość ograniczeń zawsze,
+pod koniec transakcji (czym są transakcje powiemy później)
+baza danych zgłosi wyjątek, że ograniczenie jest niespełnione i zmiany
+zostaną wycofane.
+
+W dalszej cześci zakładamy że usuwamy rząd z tabeli ``STUDENT`` do którego donosi
+się jakiś wiersz z tabeli: `PROMOTOR_LINK`.
+
+Ponieważ takie zachowanie może nie być pożądane, może zostać
+skonfigurowane, za pomocą dodatkowych klauzul, które
+zarządzają propagacją (z ang. cascade) zmian:
+
+.. code-block:: sql
+
+    CONSTRAINT "PROMOTOR_LINK_student_id_fkey1" FOREIGN KEY (student_id, praca_type)
+    REFERENCES "Praca" (student_id, type)
+    ON UPDATE NO ACTION ON DELETE NO ACTION
+
+Dokładniej rozszyfrujmy linijkę:
+
+.. code-block:: sql
+
+    ON UPDATE NO ACTION ON DELETE NO ACTION.
+
+Linia ta pozwala wybrać akcję do wykonania przez serwer, gdy
+zdalny wiersz (w naszym przykładzie zdalny rząd to wiersz z tabeli ``STUDENT``
+do którego odnosi się jakaś ``PRACA_LINK``), danych jest usuwany (``ON DELETE``) bądź
+zmieniany (``ON UPDATE``).
+
+Akcje do wybrania są takie:
+
+``NO ACTION``
+    spowoduje nie wykonanie żadnej akcji,
+    co może spowodować wyrzucenie wyjątku podczas zamykania transakcji
+    (nie spowoduje go jeśli potem usuniemy również wiersz ze wszystkuch tabel
+    posiadających klucz obcy do tego wiersza).
+``RESTRCT``
+    spowoduje wyrzucenie wyjątku od razu!
+``SET NULL``
+    spowoduje ustawienie wartości NULL w
+    kolumnach odnoszących się do kasowanego lub zmienianego wiersza.
+``SET DEFAULT``
+    spowoduje ustawienie domyślnej wartości
+    w kolumnach odnoszących się do kasowanego lub zmienianego wiersza
+``CASCADE``
+    jeśli zdalny wiersz jest kasowany spowoduje
+    skasowanie wierszy, które się do niego odnoszą, jeśli jest
+    zmieniany spowoduje zmianę wartości w tej tabeli by ciągle
+    odnosiły się do tego samego wiersza.
+
+
+Ograniczenie NOT NULL
+^^^^^^^^^^^^^^^^^^^^^
+
+Domyślnie kolumny zawsze mogą przyjmować wartość pustą (``NULL``)
+Dodanie ograniczenia NOT NULL umożliwia wymuszenie by wartości w danej
+kolumnie były różne od ``null``.
+
+Ograniczenie UNIQUE
+^^^^^^^^^^^^^^^^^^^
+
+Ograniczenie to powoduje że dana wartość w danej kolumnie w danej tabeli może
+pojawić się tylko raz.
+
+Powedzmy że chcemy wymagać by nasi użytkownicy mieli unikalne adresy e-mail:
+
+.. code-block:: sql
+
+    CREATE TABLE "FOO"
+    (
+        pk integer,
+        email character varying,
+        CONSTRAINT "FOO_unique" UNIQUE (email)
+    )
+
+.. note::
+
+    Klucze unikalne powodują podobne problemy co naturalne klucze główne:
+    czasem po prostu może się okazać, że coś powinno być unikalne,
+    takie nie jest.
+
+Ograniczenie CHECK
+^^^^^^^^^^^^^^^^^^
+
+Ograniczenie check pozwala na sprawdzenie wyniku dowolnej operacji logicznej
+wykonywanej na danym wierszu (operacja ta nie może wykonywać
+zapytań ani odnosić się do innych rzędów tabeli).
+
+Przykładowo by sprawdzić czy email jest poprawny należy dodać takie graniczenie:
+
+.. code-block:: sql
+
+    CREATE TABLE "FOO"
+    (
+        pk integer,
+        email character varying,
+        CONSTRAINT "FOO_email_check" CHECK (email LIKE '%@%.%')
+    )
+
+Teraz takie zapytanie się powiedzie:
+
+.. code-block:: sql
+
+    INSERT INTO "FOO"(email) VALUES('bzdak@poczta.if.pw.edu.pl');
+
+a takie nie:
+
+.. code-block:: sql
+
+    INSERT INTO "FOO"(email) VALUES('bar');
+
+.. note::
+
+    Generalnie sprawdzanie poprawnoście adresu ``e-mail`` za pomocą `wyrażenia
+    regularnego <http://pl.wikipedia.org/w/index.php?title=Wyra%C5%BCenie_regularne&oldid=36664770>`_
+    (jeśli nie znacie wyrażeń regularnych, bardzo polecam poznanie ich!)
+    w bazie danych nie jest najlepszym pomysłem, ponieważ:
+
+    * Większość specjalistów powie że baza danych nie jest odpowiednią warstwą
+      aplikacji do wykonania tego sprawdzenia.
+    * Najlepszą metodą sprawdzenia poprawności adresu e-mail jest wysłanie
+      na ten adres wiadomości.
+    * Zgodnie ze specyfikacją `RFC 5322
+      <http://tools.ietf.org/html/rfc5322#section-3.4.1>`_ adres email może
+      zawierać dużo bardzo dużo dziwnych rzeczy, na przykład taki adres
+      *jest poprawny*: ``"Abc\@def"@iana.org``.
