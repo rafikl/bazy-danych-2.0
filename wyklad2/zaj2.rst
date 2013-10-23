@@ -128,14 +128,31 @@ Proszę użyć słowa ``distinct``.
 Zadanie 9: SELECT FROM SUBSELECT
 --------------------------------
 
-Dla każdej stacji zbierającej $PM_{10}$,
-dla każdego miesiąca proszę wybrać ilość dni dla których średni poziom był
-większy niż $50 \frac{\mu g}{m^3}$.
+.. note::
 
-Challenge
----------
+    W regulacjach norm zanieczyszczeń powietrza przyjmuje się dwa kryteria
+    dobrej jakości powietrza: niski średni roczny poziom zanieczyszczeń,
+    oraz ilość dni w danym roku w których średnia dzienna jest
+    wyższa od pewnego progu.
 
-Zadanie polega na wykonaniu zapytania zwracającego dane z poprzednich zajęć.
+    W UE dla pyłu zawieszonego dopuszcza się w maksymalnie 50 dni dla których
+    średni poziom $PM_{10}$ jest wyższy niż $50 \frac {\mu g}{m^3}
+
+Skonstruować zapytanie spełniające następującą specyfikację:
+
+* Zapytanie zwraca jeden wiersz dla każdej stacji dokonującej pomiarów poziomu
+  pyłu zawierszonego $PM_{10}$.
+* W pierwszej kolumnie proszę zwrócić ilość lat w których było ponad 50 dni
+  z poziomem $PM_{10}$ wyższym niż $50 \frac {\mu g}{m^3}
+* W drugiej kolumnie proszę podać nazwę stacji.
+
+
+
+Challenge 1
+-----------
+
+Jak zadanie 9, ale między pierwszą a drugą kolumną należy wstawić ilość lat
+dla których w ogóle dostępne są dane dla danej stacji.
 
 .. note::
 
@@ -149,3 +166,9 @@ Zadanie polega na wykonaniu zapytania zwracającego dane z poprzednich zajęć.
     challenge.
 
     Challenge jest sprawdzadny ręcznie.
+
+
+Challenge 2
+-----------
+
+Zadanie polega na wykonaniu zapytania zwracającego dane z poprzednich zajęć.
