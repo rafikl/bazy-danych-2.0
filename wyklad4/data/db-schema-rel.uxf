@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>550</x>
+      <y>450</y>
+      <w>182</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+q1=id
+m2=0..1
+q2=id</panel_attributes>
+    <additional_attributes>160;30;160;90;160;140;40;140;40;240</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>900</x>
+      <y>700</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>STUDENT
+--
+integer id PK FK, 
+status character varying FK,
+message character varying
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>480</x>
+      <y>690</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>PRACOWNIK
+--
+integer id PK FK, 
+character varying tel_no
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>660</x>
+      <y>290</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>OSOBA
+--
+SERIAL id PK, 
+character varying name,
+character varying surname,
+gender integer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>800</x>
+      <y>450</y>
+      <w>242</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+q1=id
+m2=0..1
+q2=id</panel_attributes>
+    <additional_attributes>40;30;40;140;220;140;220;250</additional_attributes>
+  </element>
+</diagram>

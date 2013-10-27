@@ -154,6 +154,7 @@ Skonstruować zapytanie spełniające następującą specyfikację:
 * W pierwszej kolumnie proszę zwrócić ilość lat w których było ponad 50 dni
   z poziomem $PM_{10}$ wyższym niż $50 \frac {\mu g}{m^3}
 * W drugiej kolumnie proszę podać nazwę stacji.
+* Wyniki proszę sortować po nazwie stacji
 
 
 

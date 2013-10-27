@@ -1,5 +1,10 @@
-Zajęcia III
-===========
+Zajęcia 3
+=========
+
+.. warning::
+
+    Proszę zachować plik ze schematem bazy danych z tych zajęć!
+    Będzie potrzebny na następnych zajęciach!
 
 Opis zadania
 ------------

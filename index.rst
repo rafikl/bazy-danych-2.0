@@ -15,6 +15,7 @@ Wykłady
    wyklad1/wyk1.rst
    wyklad2/wyk2.rst
    wyklad3/wyk3.rst
+   wyklad4/wyk4.rst
 
 Zajęcia
 -------
@@ -24,6 +25,7 @@ Zajęcia
 
    wyklad1/zaj1.rst
    wyklad2/zaj2.rst
+   wyklad3/zaj3.rst
 
 Pozostałe
 ---------

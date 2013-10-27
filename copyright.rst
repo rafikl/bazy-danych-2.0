@@ -1,17 +1,19 @@
 Prawa autorskie
 ===============
 
-Cały kurs jest udostępniany na licencji Creative Commons 3.0 z klauzulami:
+**Cały kurs** jest udostępniany na licencji Creative Commons 3.0 z klauzulami:
 
 * Uznanie autorstwa
 * Użytek niekomercyjny
 * Bez utworów zależnych
 
-Uwaga: licencja ta udzielona jest dla *całego kursu*, nie dotyczy jego
-fragmentów z osobna.
+Uwaga: licencja ta udzielona jest dla **całego kursu**, nie dotyczy jego
+fragmentów z osobna (nie daje uprawnień do powielania fragmentów kursu).
 
 Dodatkowo udzielam zgody na utworzenie i dystrybucję utworu zależnego
 w postaci wygenerowanej z poniższego kodu źródłowego strony WWW.
+
+Polecam również lekturę pliku :doc:`readme`.
 
 Pełny tekst licencji dostępny jest tutaj :download:`/license.txt`.
 

@@ -9,14 +9,14 @@ baz danych.
 Wygenerowaną stronę można obejrzeć pod takim adresem:
 `http://db.fizyka.pw.edu.pl/bazy_danych_ed_20/ <http://db.fizyka.pw.edu.pl/bazy_danych_ed_20/>`_.
 
-Całość jest udostępniona na licencji Creative Commons 3.0: uznanie autorstwa:
+**Całość** jest udostępniona na licencji Creative Commons 3.0: uznanie autorstwa:
 
 * Uznanie autorstwa
 * Użytek niekomercyjny
 * Bez utworów zależnych
 
 patrz: :doc:`/copyright.rst`. Jeśli ktoś będzie chciał wykorzystać fragmenty
-tej pracy w swojej pracy dydaktycznej, raczej potrzebował mojej zgody (choćby
+tej pracy w swojej pracy dydaktycznej, będzie potrzebował mojej zgody (choćby
 by dokonać zmian) proszę w takim wypadku o kontakt i prawdopodobnie udzielę
 takiej zgody.
 

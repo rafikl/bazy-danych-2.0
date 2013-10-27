@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>800</x>
+      <y>550</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>STUDENT
+--
+status character varying FK,
+message character varying
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>460</x>
+      <y>300</y>
+      <w>244</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>lt=-
+magiczne INHERITS</panel_attributes>
+    <additional_attributes>150;30;150;90;150;140;30;140;30;240</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>300</y>
+      <w>230</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>lt=-
+
+magiczne INHERITS</panel_attributes>
+    <additional_attributes>30;30;30;140;210;140;210;250</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>560</x>
+      <y>140</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>OSOBA
+--
+SERIAL id PK, 
+character varying name,
+character varying surname,
+gender integer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>380</x>
+      <y>540</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>PRACOWNIK
+--
+character varying tel_no
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
