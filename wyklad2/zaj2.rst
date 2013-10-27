@@ -1,5 +1,5 @@
-Zajęcia II
-==========
+Zajęcia 2
+=========
 
 Informacje ogólne
 -----------------
@@ -8,12 +8,21 @@ Plik z tabelą do zajęć: :download:`data/zaj2.sql`.
 
 Zrzut zawartości tabel:
 
-* Tabela ``POINT_TYPE``: :download:`data/data_source.html`
-* Tabela ``DATA_SOURCE``: :download:`data/denormalized_table.html``
+* Tabela ``POINT_TYPE``: :download:`data/point_type.html`
+* Tabela ``DATA_SOURCE``: :download:`data/data_source.html`
 
 .. figure:: /wyklad2/data/data-point-final.*
 
     Układ naszej bazy danych (była omawiana :doc:`na wykładzie <wyk2>`)
+
+.. note::
+
+    **UWAGI**: w programie oceniającym tabele ``POINT_TYPE`` oraz ``DATA_SOURCE``
+    będą takie same jak macie w pobranym pliku.
+
+    Zawartość tabeli ``DATA_POINT_DAILY`` może się różnić.
+
+    **UWAGA** Zapisywanie zapytań może być dobrym pomysłem, mogą się przydać.
 
 Zadanie 0; Import bazy danych
 -----------------------------
@@ -61,8 +70,8 @@ Proszę stworzyć zapytanie, które spełnia następujące warunki:
 
 * Wybiera trzy kolumny ``date``, ``wind_x`` oraz ``wind_y``.
 * Kolumny te zawierają składową x i y wiatru, które należy wyznaczyć
-    wiedząc, że wiatr w tabeli podany jest w układzie współrzędnych
-    radialnym a my transformujemy go do kartezjańskiego.
+  wiedząc, że wiatr w tabeli podany jest w układzie współrzędnych
+  radialnym a my transformujemy go do kartezjańskiego.
 * Wyniki sortowane są po id źródła danych oraz dacie
 
 Zapytanie musi korzystać z operatora JOIN

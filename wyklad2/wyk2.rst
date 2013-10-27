@@ -47,14 +47,14 @@ Klucz główny jest to ograniczenie, które jednoznacznie identyfikuje
 dany wiersz w danej tabeli.
 
 Wiemy, że w danej chwili czasowej dane źródło danych powinno nam zwrócić
-co najwyżej jeden pomiar danego rodzaju.
-
-Inaczej w naszej bazie danych, nie może być więcej, niż jeden wiersz
+co najwyżej jeden pomiar danego rodzaju, inaczej mówiąc
+w naszej bazie danych, nie może być więcej, niż jeden wiersz
 przechowujący poziom pyłu PM_10 na stacji Warszawa
 komunikacyjna w danej chwili.
 
 Zauważmy też, że te trzy informacje jednoznacznie identyfikują dany
-wiersz, więc możemy określić, że dany wiersz będzie stanowić klucz główny.
+wiersz, więc możemy określić, że informacje te jednoznacznie identyfikują
+klucz główny.
 
 Wady naszego schematu
 ---------------------
@@ -360,7 +360,8 @@ subselect, wybór z wielu tabel czy ``JOIN`` skorzystamy.
 
 Subselecty mają zdecydowanie mniejsze możliwości, tj. wszystkie zestawy
 danych, które można opisać za pomocą subselectów da się przepisać na
-``JOIN``y, ale nie wszystkie ``JOINY`` można przepisać na subselecty.
+``JOIN`` -y, ale nie wszystkie
+``JOINY`` można przepisać na subselecty.
 
 Wybór konkretnego wyrażenia jest zatem kwestią czytelności kodu.
 

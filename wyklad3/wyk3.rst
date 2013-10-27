@@ -82,7 +82,7 @@ cz yw pliku konfiguracyjnym polecenia psql.
 Więcej informacji na `stackoverflow <http://stackoverflow.com/questions/2875610/>`_.
 
 Polecenie ``INSERT``
-====================
+--------------------
 
 Polecenie insert jest prostsze niż ``SELECT``:
 
