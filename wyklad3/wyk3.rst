@@ -399,7 +399,7 @@ Wiersz będzie jednoznacznie identyfikowany przez trzy kolumny:
 studenta, pracownika oraz rodzaj pracy, którą student napisał a
 promotor wypromował.
 
-.. _w3-naturalne-syntetyczne-pk:
+.. w3-naturalne-syntetyczne-pk:
 
 Naturalne i syntetyczne (sztuczne) klucze główne
 ************************************************
