@@ -676,7 +676,7 @@ Akcje do wybrania są takie:
     co może spowodować wyrzucenie wyjątku podczas zamykania transakcji
     (nie spowoduje go jeśli potem usuniemy również wiersz ze wszystkuch tabel
     posiadających klucz obcy do tego wiersza).
-``RESTRCT``
+``RESTRICT``
     spowoduje wyrzucenie wyjątku od razu!
 ``SET NULL``
     spowoduje ustawienie wartości NULL w

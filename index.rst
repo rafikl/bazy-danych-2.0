@@ -1,8 +1,3 @@
-.. Bazy Danych documentation master file, created by
-   sphinx-quickstart on Sun Sep 29 22:47:46 2013.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to Bazy Danych's documentation!
 =======================================
 
@@ -34,9 +29,14 @@ Pozostałe
 .. toctree::
    :maxdepth: 1
 
-   plan.rst
-   regulamin.rst
+   detailed_index
+   plan
+   regulamin
    system-zaliczeniowy
+   how_to_submit
+   wejsciowki
+
+
 
 * `Prezentacja z zajęć 0 <http://slid.es/jbzdak/bd2>`_
 

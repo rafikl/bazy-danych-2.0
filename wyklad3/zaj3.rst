@@ -97,7 +97,7 @@ Podstawowe dane tabeli:
 * ``student_id`` Klucz obcy do tabeli student, element klucza głównego
 * ``type`` Klucz obcy to tabeli tag, element klucza głównego
 * ``promotor_id`` klucz obcy to tabeli pracownik
-* tytuł ciąg znaków nie pusty
+* ``tytul`` ciąg znaków nie pusty
 
 Zadanie 7
 ---------
