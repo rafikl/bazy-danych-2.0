@@ -90,7 +90,7 @@ Wykonywanie takich zapytań jest
 <http://www.postgresql.org/docs/9.2/static/plpgsql-statements.html#PLPGSQL-STATEMENTS-EXECUTING-DYN>`_
 
 Sprawdzenie czy dane zapytanie się powiodło
-------------------------------------------
+-------------------------------------------
 Na zeszłych zajęciach w zadaniu stworzenia procedury pozwalającej
 zmianę hasła dla użytkownika należało większość z Państwa miało taką
 logikę:
@@ -258,6 +258,7 @@ Ale co to ma do baz danych? Otóż w bazie danych takie zakleszczenia
 też mogą się zdarzyć.
 
 .. code-block:: sql
+
     CREATE TABLE foo (
     foo integer,
     bar integer
@@ -276,14 +277,15 @@ Proszę otworzyć dwie konsole w pierwszej wpisać:
 
 w drugiej:
 
-.. code-block::
+.. code-block:: sql
+
     BEGIN;
     DROP TABLE bar;
     SELECT * FROM foo;
 
 w pierwszej:
 
-.. code-block::
+.. code-block:: sql
 
     SELECT * FROM bar;
 
