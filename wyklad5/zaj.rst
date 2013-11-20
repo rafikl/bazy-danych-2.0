@@ -6,7 +6,7 @@ Zajęcia V
 Zadanie 1 stworzenie tabeli
 ---------------------------
 
-Stworzenie tabeli ``USER``S, która będzie przechowywać dane, ma ona takie kolumny:
+Stworzenie tabeli ``USERS``, która będzie przechowywać dane, ma ona takie kolumny:
 
 * ``username character varying NOT NULL PRIMARY KEY`` nazwa użytkownika
 * ``password character varying NOT NULL`` hasło użytkownika Uprawnienia w tabeli
@@ -26,7 +26,7 @@ Użytkownik ``A`` może przypisać roli ``B`` własność tabeli ``T`` jeśli:
 * Użytkownik ``A`` jest elementem roli ``B``
 
 Zadanie 2, Widok USER_LIST
--------------------------
+---------------------------
 
 O widokach nie było na wykładzie, ale są one proste:
 `http://www.postgresql.org/docs/9.2/static/sql-createview.html
@@ -35,7 +35,7 @@ O widokach nie było na wykładzie, ale są one proste:
 Proszę stworzyć widok ``USER_LIST`` dostępny dla użytkownika o roli ``user``
 który będzie zwracał tylko nazwy użytkowników nie będących administratorami.
 
-W tym widoku będzie jedna kolumna.
+W tym widoku będzie jedna kolumna o nazwie ``username``.
 
 
 Zadanie 3
@@ -94,7 +94,7 @@ automatycznego hashowania hasła. Działa ona w sposób następujący:
 
 .. code-block:: sql
 
-  CREATE EXTENSION pgcrypto; -- Wykonujemy raz.
+  CREATE EXTENSION pgcrypto; -- Wykonujemy raz;
   SELECT gen_salt('bf'); --- losuje sól
   SELECT crypt( 'password123', gen_salt('bf')); -- losuje sól i hashuje hasło
   SELECT crypt('bar',  '$2a$06$R5QGfy9Jml2bH7pGH2T88.Gy9TTciacG0z77i6ACZHliuciW4g4sy') =  '$2a$06$R5QGfy9Jml2bH7pGH2T88.Gy9TTciacG0z77i6ACZHliuciW4g4sy';
@@ -127,4 +127,6 @@ funkcji skrótu.
 Zadanie 7
 ---------
 
-Proszę stworzyć funkcję która sprawdza hasła (zapisane jako skróty).
+Proszę stworzyć funkcję która sprawdza hasła ``check_password(user, password)``,
+gdzie ``password`` jest podane tekstem jawnym. Funkcja ta zwraca `true` jeśli
+hasło zgadza się z zahashowanym hasłem.

@@ -11,6 +11,8 @@ Wykłady
    wyklad2/wyk2.rst
    wyklad3/wyk3.rst
    wyklad4/wyk4.rst
+   wyklad5/wyk.rst
+   wyklad6/wyk.rst
 
 Zajęcia
 -------
@@ -21,6 +23,8 @@ Zajęcia
    wyklad1/zaj1.rst
    wyklad2/zaj2.rst
    wyklad3/zaj3.rst
+   wyklad4/zaj4.rst
+   wyklad5/zaj.rst
 
 Pozostałe
 ---------
@@ -36,12 +40,7 @@ Pozostałe
    how_to_submit
    wejsciowki
 
-
-
 * `Prezentacja z zajęć 0 <http://slid.es/jbzdak/bd2>`_
-
-
-
 
 Indices and tables
 ==================

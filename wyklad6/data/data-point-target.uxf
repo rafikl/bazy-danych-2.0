@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>380</x>
+      <y>180</y>
+      <w>220</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;VIEW&gt;&gt;
+*DATA_POINT_CURRENT*
+--
+timestamp DATE PK, 
+int point_type PK FK, 
+int data_source PK FK, 
+double value
+--
+*RESPONSIBILITIES*
+wyświetla 'najnowszy' 
+stan danych pomiarowych</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1180</x>
+      <y>190</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>*DATA_SOURCE*
+--
+int pk
+varchar name
+varchar short_name
+POINT position</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>100</x>
+      <y>450</y>
+      <w>220</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;VIEW&gt;&gt;
+*DATA_POINT_DAILY_8*
+--
+date DATE PK, 
+int point_type PK FK, 
+int data_source PK FK, 
+double value
+--
+*OPIS*
+Zawiera uśrednienie dzienne 
+danych w tabeli 
+DATA_POINT_CURRENT. 
+Tym razem uśredniamy od 
+8 rano do 8 rano</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>960</x>
+      <y>210</y>
+      <w>240</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+q1=data_source
+m2=1</panel_attributes>
+    <additional_attributes>30;30;220;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>770</x>
+      <y>180</y>
+      <w>220</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>*DATA_POINT_HISTORY*
+--
+date timestame PK, 
+insert_timestamp timestamp PK,
+point_type integer PK FK, 
+data_source integer PK FK, 
+double value</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>570</x>
+      <y>180</y>
+      <w>220</w>
+      <h>94</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+automatically
+generatated from</panel_attributes>
+    <additional_attributes>200;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>390</x>
+      <y>80</y>
+      <w>150</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Dla przejrzystości 
+ukryłem FK z tabel
+do POINT_TYPE 
+i DATA_SOURCE</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>780</x>
+      <y>380</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>*POINT_TYPE*
+--
+int pk
+varchar name
+bool normalizable
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>820</x>
+      <y>270</y>
+      <w>124</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+q1=point_type
+m2= 1</panel_attributes>
+    <additional_attributes>70;30;70;110</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>180</x>
+      <y>250</y>
+      <w>220</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+automatically
+generatated from</panel_attributes>
+    <additional_attributes>200;30;30;200</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>380</x>
+      <y>450</y>
+      <w>220</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;VIEW&gt;&gt;
+*DATA_POINT_DAILY*
+--
+date DATE PK, 
+int point_type PK FK, 
+int data_source PK FK, 
+double value
+--
+*OPIS*
+Zawiera uśrednienie dzienne 
+danych w tabeli 
+DATA_POINT_CURRENT</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>760</x>
+      <y>520</y>
+      <w>300</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>*DATA_POINT_OLD*
+--
+timestamp DATE PK, 
+int point_type PK FK, 
+int data_source PK FK, 
+double value
+--
+Unrelated to tego schematu, ale pozwala 
+Wam kopiować dane do 
+data_point_history.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>400</x>
+      <y>320</y>
+      <w>170</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+automatically
+generatated from</panel_attributes>
+    <additional_attributes>90;30;90;130</additional_attributes>
+  </element>
+</diagram>
