@@ -154,12 +154,6 @@ a duże kopiowania danych proszę wykonywać w transakcji.
 Zadanie 1: Włączenie danych historycznych
 -----------------------------------------
 
-Docelowy schemat:
-
-.. figure:: data/data-point-target.svg
-
-    Docelowy schemat bazy danych
-
 
 Zadanie 1.1 Utworzenie tabelki ``DATA_POINT_HISTORY``
 ---------------------------------------------------
@@ -210,7 +204,6 @@ Następnie proszę wykonać zapytania:
     SELECT * FROM "DATA_POINT_CURRENT_VIEW" WHERE POINT_TYPE = 4 AND DATA_SOURCE = 1:
 
 Czas wykonywania tych zapytań proszę zapisać na kartce.
-
 
 
 Zadanie 1.3 Utworzenie tabeli ``DATA_POINT_CURRENT``
@@ -271,12 +264,28 @@ uśrednianie dzienne.
 Zadanie 2.1 Utworzenie widoku ``DATA_POINT_DAILY_VIEW``
 -----------------------------------------------------
 
-Widok wybierający dane w uśrendnieniu dziennym.
+Widok ten wybirera dane z tabeli ``DATA_POINT_CURRENT`` w uśrendnieniu dziennym.
+
+Widok ten ma następujące kolumny:
+
+``date``
+    timestamp without time zone NOT NULL -- dzień pomiaru
+``point_type``
+    smallint NOT NULL -- rodzaj punktu
+``data_source``
+    integer NOT NULL -- źródło danych
+``value``
+    double precision -- uśredniona wartość
+``aggregated``
+    integer NOT NULL -- ilość punktów które uśredniono na ``value``
+
 
 Zadanie 2.2 Utworzenie tabelki ``DATA_POINT_DAILY``
 -------------------------------------------------
 
 Oznaczyłem ją jako ``WIDOK``, ale tak na prawdę będzie to materializowany widok.
+
+Wiersze takie jak w ``DATA_POINT_DAILY_VIEW``, klucz główny jak w ``DATA_POINT_CURRENT``.
 
 Zachowania tej tabeli:
 
@@ -285,6 +294,18 @@ Zachowania tej tabeli:
   dla wspomnianego punktu i stacji.
 * Nie można na tej tabeli robić ``DELETE``
 * Nie można na tej tabeli robić ``UPDATE``
+
+Zachowania tabeli ``DATA_POINT_CURRENT``:
+
+* Przy dowolnej zmiany tabeli ``DATA_POINT_CURRENT`` odświerzana jest średnia w
+  ``DATA_POINT_DAILY``.
+* Jeśli dla danego dnia oznaczonego jako X (i dla ustalonego parametru i
+  źródła danych) w ``DATA_POINT_CURRENT`` nie ma żadnych
+  pomiarów zachodzi jedna z dwóch możliwości:
+
+  * W ``DATA_POINT_CURRENT`` nie ma wiersza o dacie X.
+  * W ``DATA_POINT_CURRENT`` jest wiersz z datą X ale ma on w kolumnie ``value``
+    wartość ``NULL`` a w kolumnie ``aggregated`` wartość ``0``.
 
 
 Zadanie 2.4 Wydajność
