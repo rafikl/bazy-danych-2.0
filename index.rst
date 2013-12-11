@@ -25,6 +25,15 @@ Zajęcia
    wyklad3/zaj3.rst
    wyklad4/zaj4.rst
    wyklad5/zaj.rst
+   wyklad6/zaj.rst
+
+Projekty
+--------
+
+.. toctree::
+   :maxdepth: 1
+
+    projekt.rst
 
 Pozostałe
 ---------

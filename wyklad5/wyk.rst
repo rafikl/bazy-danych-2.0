@@ -217,6 +217,9 @@ Poziomy uprawnień w postgresie:
 
         CREATE DATABSE foo OWNER bar;
 
+    Każdy inny obiekt w bazie danych również ma przypisanego
+    właściciela.
+
 ``POZOSTALI``
 
     mają uprawnienia do tego do czego je otrzymali.
@@ -226,6 +229,21 @@ Poziomy uprawnień w postgresie:
 
     Ja (jak zwykle) raczej radzę używać pgAdmina, który
     pozwala to wyklikać.
+
+Zmiana ownera w psql
+--------------------
+
+Zmiana ``OWNER-a`` może być problematyczna. Użytkownik P może X przypisać
+właściciela O tylko wtedy gdy:
+
+* Użytkownik O mógłby stworzyć obiekt X
+
+ * Jeśli obiektem X jest tabela czy widok to O musi mieć uprawnienia do
+   tworzenia obiektów w danym schemacie.
+ * Jeśli obiektem X jest baza danych, O musi mieć uprawnienie do tworzenia
+   baz danych
+
+* Użytkownik P będzie mógł dalej modyfikować X (nawet po zmianie właściciela).
 
 
 Role w psql
@@ -274,6 +292,47 @@ W takim wypadku użytkownik nie ma prawa modyfikować tabeli użytkownik, ma
 natomiast prawo do wykonania procedury która pozwala na modyfikację
 zwykłych użytkowników, ale nie zezwala na modyfikację administratorów.
 
+
+Manipulacja użytkownikami (rolami)
+----------------------------------
+
+Role są zdefiniowane na poziomie klastra baz danych (danej instancji
+``postgresql``). Użytkownik to rola, która może się logować.
+
+.. code-block:: sql
+
+    CREATE USER foo; -- Tworzenie użytkownika foo
+    CREATE ROLE bar; -- Tworzenie roli bar
+    GRANT bar to foo;  -- Nadanie foo uprawnień roli bar.
+
+Uprawnienia logowania
+^^^^^^^^^^^^^^^^^^^^^
+
+Postgresql umożliwia dwie metody logowania do bazy danych, za pomocą
+połączenia ``TCP/IP`` oraz za `pomocą gniazd linuksa
+<http://en.wikipedia.org/wiki/Unix_file_types#Socket>`_ (u mnie gniazdo to jest w
+``/var/run/postgresql/.s.PGSQL.5432``).
+
+W pliku ``pg_hba.conf`` (u mnie jest on w
+``/etc/postgresql/9.3/main/pg_hba.conf``), znajdują się opcje konfigurujące
+metody audentykacji dla różnych użytkowników, baz i metod komunikacji.
+
+Metody logowania są takie:
+
+``reject``
+    Powoduje odrzucenie prób logowania.
+``trust``
+    Powoduje że każda próba logowania się powiedzie (możemy określić
+    na jakiego użytkownika się logujemy)
+``peer``
+    Działa dla logowania za pomocą plików gniazd, i powoduje że użytkownik
+    systemu operacyjnego o nazwie XXX jest logowany na tego samego użytkownika
+    w bazie danych.
+``md5``
+    Logowanie hasłem.
+inne
+    Są też inne metody.
+
 Definiowanie funkcji SQL
 ------------------------
 
@@ -319,8 +378,8 @@ Następny przykład:
     END;
     $$ LANGUAGE plpgsql;
 
- Funkcje trigger
- ---------------
+Funkcje trigger
+---------------
 
 Funkcje trigger to małe kawałki kodu które są wykonywane automatycznie
 przy wykonywaniu operacji na tabelach. Na przykład trigger wykonywany

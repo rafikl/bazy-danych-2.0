@@ -1,7 +1,7 @@
 
-
-Zajęcia V
+Zajęcia 5
 =========
+
 
 Zadanie 1 stworzenie tabeli
 ---------------------------
@@ -25,14 +25,14 @@ Użytkownik ``A`` może przypisać roli ``B`` własność tabeli ``T`` jeśli:
 * Rola ``B`` może tworzyć tabele w schemacie w którym znajduje się ``T``
 * Użytkownik ``A`` jest elementem roli ``B``
 
-Zadanie 2, Widok USER_LIST
+Zadanie 2, Widok LIST_USERS
 ---------------------------
 
 O widokach nie było na wykładzie, ale są one proste:
 `http://www.postgresql.org/docs/9.2/static/sql-createview.html
 <http://www.postgresql.org/docs/9.2/static/sql-createview.html>`_
 
-Proszę stworzyć widok ``USER_LIST`` dostępny dla użytkownika o roli ``user``
+Proszę stworzyć widok ``LIST_USERS`` dostępny dla użytkownika o roli ``user``
 który będzie zwracał tylko nazwy użytkowników nie będących administratorami.
 
 W tym widoku będzie jedna kolumna o nazwie ``username``.
@@ -54,7 +54,7 @@ będzie tworzyć użytkownika który nie jest administratorem.
 Zadanie 4
 ---------
 
-Teraz proszę stworzyć funkcję ``change_password(username, password)``
+Teraz proszę stworzyć funkcję ``change_user(username, password)``
 która będzie dostępna dla użytkownika ``user`` i która
 będzie zmieniać hasło użytkownikowi o nazwie ``username``.
 Jeśli username jest admiem funkcja powinna zgłaszać błąd.

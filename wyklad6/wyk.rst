@@ -91,6 +91,7 @@ Wykonywanie takich zapytań jest
 
 Sprawdzenie czy dane zapytanie się powiodło
 -------------------------------------------
+
 Na zeszłych zajęciach w zadaniu stworzenia procedury pozwalającej
 zmianę hasła dla użytkownika należało większość z Państwa miało taką
 logikę:

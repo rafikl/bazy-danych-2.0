@@ -33,6 +33,8 @@ Potencjalne problemy
         DROP SCHEMA public CASCADE;
         CREATE SCHEMA public;
 
+Migrowany schemat danych :download:`data/create-schema.sql`
+
 Zbiór zadań nr 1 --- migracja bazy danych do schematu SINGLE-TABLE
 ------------------------------------------------------------------
 

@@ -83,7 +83,7 @@ Dodajemy teraz nowy element klucza głównego:
     )
 
 
-zakładamy że pierwszy rząd z danymi `foo` i `foobar` będzie dostawać `version`
+zakładamy że pierwszy rząd z danymi ``foo`` i ``foobar`` będzie dostawać ``version``
 równe zero, a każdy kolejny:
 
 .. code-block:: sql
@@ -125,7 +125,7 @@ Czasem równie dobrze jest przechowywanie w taki sposób:
 http://stackoverflow.com/a/3874750.
 
 Indeksy
-=======
+-------
 
 Indeksy są metodą na przyśpieszenie niektórych zapytań
 kosztem zwiększenia rozmiaru bazy danych oraz spowolnienia insertów.
@@ -136,11 +136,11 @@ W praktyce indeks (indeksy) pozwalją na przyśpieszenie zapytania
 
     SELECT MAX(insert_date) FROM  FOO WHERE foo = ... AND foobar = ...
 
-tylko gdy indeksy są dodane do kolmn `foo`, `bar`.
+tylko gdy indeksy są dodane do kolmn ``foo``, ``bar``.
 
 
 Deffered constraints
-====================
+--------------------
 
 Więzy w bazie danych mogą być albo sprawdzane natychmiast (po każdej operacji),
 albo pod koniec transakcji. Druga opcja może być szybsza, ale czasem może też
@@ -152,7 +152,7 @@ a duże kopiowania danych proszę wykonywać w transakcji.
 
 
 Zadanie 1: Włączenie danych historycznych
-=========================================
+-----------------------------------------
 
 Docelowy schemat:
 
@@ -161,23 +161,26 @@ Docelowy schemat:
     Docelowy schemat bazy danych
 
 
-Zadanie 1.1 Utworzenie tabelki `DATA_POINT_HISTORY`
+Zadanie 1.1 Utworzenie tabelki ``DATA_POINT_HISTORY``
 ---------------------------------------------------
 
 Tworzymy tą tabelę.
 
 Zachowania tej tabeli:
 
-* Nie można na tej tabeli robić `DELETE`
-* Nie można na tej tabeli robić `UPDATE`
-* Są klucze obce do tabel `POINT_TYPE` i `DATA_SOURCE`
+* Nie można na tej tabeli robić ``DELETE``
+* Nie można na tej tabeli robić ``UPDATE``
+* Są klucze obce do tabel ``POINT_TYPE`` i ``DATA_SOURCE``
+* Jest to tabela historyczna --- zatem ma dodatkową
+  kolumę z czasem umieszczenia rekordu. Kolumna ta powinna być domyślnie
+  uzupełniana aktualną datą.
 
-Tak na prawdę nie powinno się również móc na tej tabeli robić `INSERT`
+Tak na prawdę nie powinno się również móc na tej tabeli robić ``INSERT``
 (przynajmniej dla wszystkich użytkowników), ale daruje to Państwu.
 
 **Kopiowanie danych**
 
-By wydajnie skopiować dane między `DATA_POINT_OLD` oraz `DATA_POINT_HISTORY`
+By wydajnie skopiować dane między ``DATA_POINT_OLD`` oraz ``DATA_POINT_HISTORY``
 można tymczasowo usunąć wsztstkie constrainty na tej tabeli (potem je odtworzyć)
 
 **Wydajność**
@@ -190,11 +193,11 @@ Proszę zbadać czas wykonania zapytania:
 
 Czas wykonywania tych zapytań proszę zapisać na kartce.
 
-Zadanie 1.2 Utworzenie widoku `VIEW_DATA_POINT_CURRENT`
+Zadanie 1.2 Utworzenie widoku ``DATA_POINT_CURRENT_VIEW``
 -------------------------------------------------------
 
 Jest to widok który zawsze zawiera tylko najaktualniejsze wersje danych
-pomiarowych z tabeli: `DATA_POINT_HISTORY`.
+pomiarowych z tabeli: ``DATA_POINT_HISTORY``.
 
 **Wydajność**
 
@@ -202,34 +205,32 @@ Następnie proszę wykonać zapytania:
 
 .. code-block:: sql
 
-    SELECT * FROM "VIEW_DATA_POINT_CURRENT":
+    SELECT * FROM "DATA_POINT_CURRENT_VIEW":
 
-    SELECT * FROM "VIEW_DATA_POINT_CURRENT" WHERE POINT_TYPE = 4 AND DATA_SOURCE = 1:
+    SELECT * FROM "DATA_POINT_CURRENT_VIEW" WHERE POINT_TYPE = 4 AND DATA_SOURCE = 1:
 
 Czas wykonywania tych zapytań proszę zapisać na kartce.
 
-**Uwaga**
 
-Możecie Państwo użyć klauzuli `DISTINCT ON`.
 
-Zadanie 1.3 Utworzenie tabeli `DATA_POINT_CURRENT`
+Zadanie 1.3 Utworzenie tabeli ``DATA_POINT_CURRENT``
 --------------------------------------------------
 
-Oznaczyłem ją jako `WIDOK`, ale tak na prawdę będzie to materializowany widok,
+Oznaczyłem ją jako ``WIDOK``, ale tak na prawdę będzie to materializowany widok,
 czyli tak na prawdę tabela z mnóstwem triggerów.
 
 Zachowania tej tabeli:
 
 * Zawsze zawiera najnowszą wersję rekordu
 * INSERT oraz UPDATE powodują dodanie kolejnej wersji historycznej dla tabeli
-  `DATA_POINT_HISTORY`.
-* DELETE wstawia NULL kolejną wersję z wartością `NULL` do `DATA_POINT_HISTORY`
-* Są klucze obce do tabel `POINT_TYPE` i `DATA_SOURCE`
+  ``DATA_POINT_HISTORY``.
+* DELETE wstawia NULL kolejną wersję z wartością ``NULL`` do ``DATA_POINT_HISTORY``
+* Są klucze obce do tabel ``POINT_TYPE`` i ``DATA_SOURCE``
 
 **Wydajność 1**
 
-Proszę wyczyścić tabelę: `DATA_POINT_HISTORY` a następnie wstawić do niej dane
-ponownie za pomocą `DATA_POINT_CURRENT`.
+Proszę wyczyścić tabelę: ``DATA_POINT_HISTORY`` a następnie wstawić do niej dane
+ponownie za pomocą ``DATA_POINT_CURRENT``.
 
 Następnie proszę wykonać zapytania:
 
@@ -251,13 +252,15 @@ widoku?
 Jami miało wpływ na wydajność umieszczania danych wprowadzenie go?
 
 
+
+
 Zadanie 2: Uśrednianie danych
-=============================
+-----------------------------
 
 Mamy już tabelę zawierającą dane historyczne oraz tabelę zawierającą dane
 bierzące, teraz dodatkowy kawałek informacji: Tak na prawdę nie wiemy z
-jaką częstotliwością zbierane są dane w tabelach: `DATA_POINT_HISTORY` oraz
-`DATA_POINT_CURRENT`, tj, różne źródła danych mogą zbierać dane z
+jaką częstotliwością zbierane są dane w tabelach: ``DATA_POINT_HISTORY`` oraz
+``DATA_POINT_CURRENT``, tj, różne źródła danych mogą zbierać dane z
 różną rozdzielczością czasową.
 
 Takie dane nie nadają się do żadnej obróbki, wymagane jest zatem sprowadzenie
@@ -265,23 +268,23 @@ ich do stałej częstotliwości, jedną z takich częstotliwości jest
 uśrednianie dzienne.
 
 
-Zadanie 2.1 Utworzenie widoku `DATA_POINT_DAILY_VIEW`
+Zadanie 2.1 Utworzenie widoku ``DATA_POINT_DAILY_VIEW``
 -----------------------------------------------------
 
 Widok wybierający dane w uśrendnieniu dziennym.
 
-Zadanie 2.2 Utworzenie tabelki `DATA_POINT_DAILY`
+Zadanie 2.2 Utworzenie tabelki ``DATA_POINT_DAILY``
 -------------------------------------------------
 
-Oznaczyłem ją jako `WIDOK`, ale tak na prawdę będzie to materializowany widok.
+Oznaczyłem ją jako ``WIDOK``, ale tak na prawdę będzie to materializowany widok.
 
 Zachowania tej tabeli:
 
 * Wyniki zawsze zawierają dane uśrednione dziennie, tj. wiersz ze źródła 4
   i typu punktu 3 z datą '12-12-2012' zawiera wartość średnią dla tego dnia
   dla wspomnianego punktu i stacji.
-* Nie można na tej tabeli robić `DELETE`
-* Nie można na tej tabeli robić `UPDATE`
+* Nie można na tej tabeli robić ``DELETE``
+* Nie można na tej tabeli robić ``UPDATE``
 
 
 Zadanie 2.4 Wydajność
@@ -293,14 +296,14 @@ Jak w zadaniu 1.
 Challenge
 =========
 
-Do tej pory wiersze w tabeli  `DATA_POINT_HISTORY` odnosiły się do tabeli
-`DATA_SOURCE`. Kiedy zmienimy źródło danych pośrednio zmienimy również
-znaczenie danych w tabeli `DATA_SOURCE`.
+Do tej pory wiersze w tabeli  ``DATA_POINT_HISTORY`` odnosiły się do tabeli
+``DATA_SOURCE``. Kiedy zmienimy źródło danych pośrednio zmienimy również
+znaczenie danych w tabeli ``DATA_SOURCE``.
 
 Proszę zmienić schemat tak by wprowadzić dane historyczne również do tabeli
-`DATA_SOURCE`, wprowadzając `DATA_SOURCE_HISTORY`, wiersze w tabeli
-`DATA_POINT_HISTORY` mają klucz obcy do się do tabeli `DATA_SOURCE`, a
-wiersze w tabeli `DATA_POINT` mają odniesienie do tabeli `DATA_SOURCE`.
+``DATA_SOURCE``, wprowadzając ``DATA_SOURCE_HISTORY``, wiersze w tabeli
+``DATA_POINT_HISTORY`` mają klucz obcy do się do tabeli ``DATA_SOURCE``, a
+wiersze w tabeli ``DATA_POINT`` mają odniesienie do tabeli ``DATA_SOURCE``.
 
 .. note::
 

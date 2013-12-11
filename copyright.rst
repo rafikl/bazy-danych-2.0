@@ -18,7 +18,7 @@ Polecam również lekturę pliku :doc:`readme`.
 Pełny tekst licencji dostępny jest tutaj :download:`/license.txt`.
 
 W poszczególnych przypadkach będzie istniała możliwość zmiany warunków
-udostępniania niniejszego kusu, proszę o kontakt pod adresem:
+udostępniania niniejszego kursu, proszę o kontakt pod adresem:
 ``jbzdak[at]gmail[dot]com``.
 
 .. raw:: html
