@@ -460,7 +460,7 @@ nadawała go i ręcznie liczyła sumę kontrolną, zdarzają się więc
 osoby, które mają taki sam numer pesel (rzadko, bo rzadko, ale są).
 
 Numer pesel zawiera datę urodzenia, jednak zdarzają się dni, w których
-"urodziło się" ponad 10 000 osób, wtedy osobom przypisuje się numery
+"urodziło się" ponad 100 000 osób, wtedy osobom przypisuje się numery
 pesel z następnych dni.
 
 Numer pesel posiada sumę kontrolną, ale czasem jest ona błędnie wyliczona
