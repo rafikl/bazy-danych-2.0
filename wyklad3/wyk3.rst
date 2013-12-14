@@ -1,3 +1,6 @@
+.. role:: raw-math(raw)
+    :format: latex html
+
 Wykład 3: Zarządzanie schematem danych
 =======================================
 
@@ -325,7 +328,7 @@ Indeks jest miejscem, w którym ``id`` są posortowane,
 a wraz z nim przechowywana jest informacja gdzie znajduje się
 rząd o danym ``id``.
 
-W takim wypadku baza danych musi przeszukać indeks (co średnio
+W takim wypadku baza danych musi przeszukać indeks (co
 zajmuje jej średnio $log_2(n)$ ($n$ -- ilość wierszy w tabeli)
 odczytów, a potem odczytuje z dysku dobry wiersz.
 
